@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
+
+
 # 3/15/2022: Unfinished work = determining Product price, storing payment info
 
 
@@ -38,6 +40,13 @@ class Coupon(models.Model):
     totalDiscount = models.DecimalField(blank=True, default=0.00, decimal_places=2, max_digits=5)
 
 
+def determine_order_price(order):
+    total = 0
+    for product in order:
+        total += product.get_price()
+    return total
+
+
 class Product(models.Model):
     # Pizza is our only Product for the store and comes in two types: Whole Pizzas and Slices
     # PRODUCT_TYPES is a dictionary that shows both the type and its related base price
@@ -45,6 +54,8 @@ class Product(models.Model):
     # There is also only one type of crust if you were curious
     TYPE_SLICE = 'Slice'
     TYPE_WHOLE_PIE = 'Whole Pie'
+    SLICE_BASE_PRICE = 3
+    WHOLE_PIE_BASE_PRICE = 14
     PRODUCT_TYPES = ((TYPE_SLICE, 'Slice'), (TYPE_WHOLE_PIE, 'Whole Pie'))
     # PRODUCT_PIZZA_NAMES shows all possible flavors of Pizza as well as their number of toppings
     # Toppings determine price (i.e. more toppings = more expensive)
@@ -67,8 +78,21 @@ class Product(models.Model):
     sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
     price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=4, decimal_places=2)
 
-    def determine_price(self):
-        pass
+    def get_price(self):
+        return self.price
+
+    def get_type(self):
+        return self.type
+
+    # Finds and determines the price of a product based on the product type and number of toppings
+    # NOT FINISHED
+    # Need to determine proper way to get the number of toppings from the product
+    def determine_product_price(self):
+        if self.type == 'Slice':
+            total = round(3 + (0.30 * len(self.toppings)), 2)
+        else:  # self.type == 'Whole Pie'
+            total = round(14 + (0.65 * len(self.toppings)), 2)
+        return total
 
 
 class Toppings(models.Model):
