@@ -20,38 +20,25 @@
         <div class="row">
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
-                    <img src="{% static "images/customer.jpg" %}" class="card-img-top" alt="customer">
                     <div class="card-body">
-                        <h5 class="card-title">Customers</h5>
-                        <p class="card-text">We love our customers.</p>
-                        <p><a class="btn btn-primary" href="{% url 'crm:customer_list' %}"
-                              role="button">View details &raquo;</a></p>
+                        <h5 class="card-title">Cart</h5>
+                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
+                              role="button">View Cart &raquo;</a></p>
                     </div>
                 </div>
             </div>
 
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
-                    <img src="{% static "images/lunch.jpeg" %}" class="card-img-top" alt="lunch">
                     <div class="card-body">
-                        <h5 class="card-title">Services</h5>
-                        <p class="card-text">Great Services</p>
-                        <p><a class="btn btn-primary" href="{% url 'crm:service_list' %}"
-                              role="button">View details &raquo;</a></p>
+                        <h5 class="card-title">Menu</h5>
+                        <p class="card-text">Great Healthy Menu Items!</p>
+                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Menu' %}"
+                              role="button">View Menu &raquo;</a></p>
                     </div>
                 </div>
             </div>
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "images/cupcakes.jpeg" %}" class="card-img-top" alt="cupcakes">
-                    <div class="card-body">
-                        <h5 class="card-title">Products</h5>
-                        <p class="card-text">Great Products</p>
-                        <p><a class="btn btn-primary" href="{% url 'crm:product_list' %}"
-                              role="button">View details &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     </body>

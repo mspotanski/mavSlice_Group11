@@ -6,6 +6,9 @@ from _decimal import Decimal
 from .models import *
 from .forms import *
 
+# Do you need a model for every view?
+# How to render a request not based on the model?
+
 
 def home(request):
     return render(request, 'mavSlice/home.html',
@@ -17,17 +20,21 @@ def Menu(request):
                   {'Menu': Menu})
 
 
-@login_required
 def Cart(request):
-    pass
+    return render(request, 'mavSlice/Cart.html',
+                  {'Cart': Cart})
 
 
+@login_required
 def cart_delivery(request):
-    pass
+    return render(request, 'mavSlice/cart_delivery.html',
+                  {'Delivery': Delivery})
 
 
+@login_required
 def checkout(request):
-    pass
+    return render(request, 'mavSlice/checkout.html',
+                  {'Checkout': checkout})
 
 
 @login_required
@@ -39,17 +46,23 @@ def customer_list(request):
 
 @login_required
 def order_list(request):
-    pass
+    order = Order.objects.filter()
+    return render(request, 'mavSlice/order_list.html',
+                  {'orders': order})
 
 
 @login_required
 def order_completed_list(request):
-    pass
+    completed_order = Order.objects.filter()
+    return render(request, 'mavSlice/order_completed_list.html',
+                  {'completed orders': completed_order})
 
 
 @login_required
-def order_NOT_completed_list(request):
-    pass
+def order_not_completed_list(request):
+    not_completed_order = Order.objects.filter()
+    return render(request, 'mavSlice/order_NOT_completed_list.html',
+                  {'Non completed orders': not_completed_order})
 
 
 @login_required
@@ -63,7 +76,9 @@ def order_confirmation(request):
 
 
 def coupon_list(request):
-    pass
+    coupon = Coupon.objects.filter()
+    return render(request, 'mavSlice/coupon_list',
+                  {'coupons': coupon})
 
 
 @login_required

@@ -40,13 +40,6 @@ class Coupon(models.Model):
     totalDiscount = models.DecimalField(blank=True, default=0.00, decimal_places=2, max_digits=5)
 
 
-def determine_order_price(order):
-    total = 0
-    for product in order:
-        total += product.get_price()
-    return total
-
-
 class Product(models.Model):
     # Pizza is our only Product for the store and comes in two types: Whole Pizzas and Slices
     # PRODUCT_TYPES is a dictionary that shows both the type and its related base price
@@ -76,7 +69,7 @@ class Product(models.Model):
     toppings = models.ManyToManyField('Toppings', blank=True)
     coupon = models.ManyToManyField('Coupon', blank=True)
     sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
-    price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=4, decimal_places=2)
+    price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=6, decimal_places=2)
 
     def get_price(self):
         return self.price
@@ -128,3 +121,18 @@ class Order(models.Model):
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
+    products = models.ManyToManyField('Product', blank=False)
+    order_price = models.DecimalField(blank=False, default=0.00, max_digits=4, decimal_places=2)
+
+    # NOT Finished
+    # Need to determine how to grab the price for each individual product
+    #
+    # def determine_order_price(self.products):
+    #     total = 0
+    #     for product in products:
+    #         total += product.get_price()
+    #     return total
+
+
+class checkout(models.Model):
+    pass
