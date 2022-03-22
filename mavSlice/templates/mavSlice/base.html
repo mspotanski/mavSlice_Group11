@@ -6,54 +6,56 @@
 <meta charset="utf-4">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <body>
-    {% if user.is_authenticated %}
-        <div class="page-container">
-            <h2 class="top-menu">Hello {{ user.username }},</h2>
-            <p>Please choose from options below.</p>
-        </div>
-    {% else %}
-        <p>Insert login button here</p>
-    {% endif %}
-    <div class="content container">
-        <!-- Example row of columns using cards for alignment
-             The value of 'col-md-x' for all columns in the row must add up to 12
-             This page has 3 columns, each column uses col-md-4, for a total of 12 -->
-        <div class="row">
-            <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Cart</h5>
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
-                              role="button">View Cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Menu</h5>
-                        <p class="card-text">Great Healthy Menu Items!</p>
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Menu' %}"
-                              role="button">View Menu &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
+<link rel="stylesheet" href="{% static "static/stylesheet.css" %}>
 
-             <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Menu</h5>
-                        <p class="card-text">Great Healthy Menu Items!</p>
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:home' %}"
-                              role="button">View Home &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid">
 
-        </div>
+    <div class="navbar-header" href="">
+        <!-- Logo -->
+        <a class="navbar-brand" href="">
+            MavSlice Pizza
+        </a>
+
+    <ul class="navbar-nav mr-auto">
+        <li class="navbar-brand"></li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'mavSlice:home' %}">Home</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'mavSlice:home' %}">Home</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'mavSlice:Menu' %}">Menu</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'mavSlice:Cart' %}">Cart</a>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li><a class="nav-link" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span>Logout</a>
+                </li>
+
+            {% else %}
+                <li><a class="nav-link" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                </li>
+            {% endif %}
+    </ul>
     </div>
-    </body>
-
+<body id="app-layout">
+<div class="row">
+    <div class="col-md-8">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</body>
 </html>
+
+
