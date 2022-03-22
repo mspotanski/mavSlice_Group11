@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Product</title>
-    adding stuff
-</head>
-<body>
-
-</body>
+{% extends 'mavSlice/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <style>
+        body {background-color: rgba(0,0,0,255);}
+    </style>
+    <h1>Edit Product</h1>
+    <form method="POST" class="customer-form">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+{% endblock %}
 </html>

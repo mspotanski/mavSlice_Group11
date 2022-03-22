@@ -77,7 +77,7 @@ def order_confirmation(request):
 
 def coupon_list(request):
     coupon = Coupon.objects.filter()
-    return render(request, 'mavSlice/coupon_list',
+    return render(request, 'mavSlice/coupon_list.html',
                   {'coupons': coupon})
 
 
@@ -107,8 +107,22 @@ def product_new(request):
 
 
 @login_required
-def ProductEdit(request):
-    pass
+def ProductEdit(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        # Update
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.updated_date = timezone.now()
+            product.save()
+            product = Product.objects.filter()
+            return render(request, 'mavSlice/product_list.html',
+                          {'products': product})
+        else:
+            # edit
+            form = ProductForm(instance=product)
+        return render(request, 'mavSlice/ProductEdit.html', {'form': form})
 
 
 @login_required
