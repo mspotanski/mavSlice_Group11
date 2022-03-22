@@ -1,17 +1,26 @@
 import uuid
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User, AbstractUser
-
-
 # 3/15/2022: Unfinished work = determining Product price, storing payment info
+# 3/22/2022: Unfinished work = accessing user data, all from 3/15/2022
 
 
 class Customer(models.Model):
     # We only have to add our extra variables here
     # Current authentication uses username, may need to switch to email
     cust_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Customer')
     delivery_info = models.OneToOneField('Delivery', null=True, on_delete=models.CASCADE)
+
+    def get_user_email(self):
+        return self.user.email
+
+    def get_user_first_name(self):
+        return self.user.first_name
+
+    def get_user_last_name(self):
+        return self.user.last_name
 
 
 class Delivery(models.Model):
@@ -66,7 +75,7 @@ class Product(models.Model):
     product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a Product')
     type = models.CharField(max_length=10, choices=PRODUCT_TYPES, blank=False, default='Whole Pie')
     name = models.CharField(max_length=20, choices=PRODUCT_PIZZAS, blank=False, default='Cheese')
-    toppings = models.ManyToManyField('Toppings', blank=True)
+    toppings = models.ManyToManyField('Toppings', blank=True, related_name='toppings')
     coupon = models.ManyToManyField('Coupon', blank=True)
     sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
     price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=6, decimal_places=2)
@@ -123,8 +132,8 @@ class Order(models.Model):
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
     products = models.ManyToManyField('Product', blank=False)
     order_price = models.DecimalField(blank=False, default=0.00, max_digits=4, decimal_places=2)
-    placed_time = models.DateTimeField
-    completed_time = models.DateTimeField
+    placed_time = models.DateTimeField(default=timezone.now)
+    completed_time = models.DateTimeField(default=timezone.now)
     # NOT Finished
     # Need to determine how to grab the price for each individual product
     #
