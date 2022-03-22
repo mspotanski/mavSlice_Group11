@@ -1,9 +1,11 @@
 
 <!DOCTYPE html>
-<html lang="en">
-{% extends 'mavSlice/base.html' %}
 {% load static %}
-{% block content %}
+
+<html lang="en">
+<meta charset="utf-4">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
     <body>
     {% if user.is_authenticated %}
         <div class="page-container">
@@ -11,7 +13,7 @@
             <p>Please choose from options below.</p>
         </div>
     {% else %}
-        <p>Please choose from options below.</p>
+        <p>Insert login button here</p>
     {% endif %}
     <div class="content container">
         <!-- Example row of columns using cards for alignment
@@ -39,8 +41,19 @@
                 </div>
             </div>
 
+             <div class="col-md-4 d-flex align-items-stretch">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Menu</h5>
+                        <p class="card-text">Great Healthy Menu Items!</p>
+                        <p><a class="btn btn-primary" href="{% url 'mavSlice:home' %}"
+                              role="button">View Home &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     </body>
-{% endblock %}
+
 </html>
