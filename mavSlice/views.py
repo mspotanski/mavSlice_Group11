@@ -75,6 +75,7 @@ def order_confirmation(request):
     pass
 
 
+@login_required
 def coupon_list(request):
     coupon = Coupon.objects.filter()
     return render(request, 'mavSlice/coupon_list.html',
@@ -127,7 +128,9 @@ def ProductEdit(request, pk):
 
 @login_required
 def product_delete(request):
-    pass
+    product = get_object_or_404(Product, pk=pk)
+    product.delete()
+    return redirect('mavSlice:product_list')
 
 
 @login_required

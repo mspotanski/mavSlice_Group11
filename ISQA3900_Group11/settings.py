@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mavSlice.apps.MavsliceConfig',
     'crispy_forms',
+    'django.contrib.humanize',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

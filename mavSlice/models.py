@@ -123,7 +123,8 @@ class Order(models.Model):
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
     products = models.ManyToManyField('Product', blank=False)
     order_price = models.DecimalField(blank=False, default=0.00, max_digits=4, decimal_places=2)
-
+    placed_time = models.DateTimeField
+    completed_time = models.DateTimeField
     # NOT Finished
     # Need to determine how to grab the price for each individual product
     #

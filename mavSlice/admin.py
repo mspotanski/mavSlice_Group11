@@ -30,7 +30,15 @@ class ProductList(admin.ModelAdmin):
     ordering = ['cust_name']
 
 
+class ToppingsList(admin.ModelAdmin):
+    list_display = ('name',)
+    list_filter = ('name',)
+    search_fields = ('name', )
+    ordering = ['name']
+
+
 # register the Service and Product with the django admin page
 admin.site.register(Customer, CustomerList)
 admin.site.register(Order, OrderList)
 admin.site.register(Product, ProductList)
+admin.site.register(Toppings, ToppingsList)
