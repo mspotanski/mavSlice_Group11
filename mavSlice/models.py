@@ -143,6 +143,6 @@ class Order(models.Model):
     #         total += product.get_price()
     #     return total
 
-
-class checkout(models.Model):
-    pass
+#
+# class checkout(models.Model):
+#     pass
