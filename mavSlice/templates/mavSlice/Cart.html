@@ -1,15 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
 {% extends 'mavSlice/base.html' %}
-{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Cart</title>
-</head>
-<body>
-This is the cart page
+{% block body %}
+    {% if total == 0 %}
+        <h1>You don't have anything in cart</h1>
+    {% else %}
+        <div class="col-12">
+            <table class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Product name</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if Pizza %}
+                    {% for item in Product %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ item.price }} USD</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
 
-</body>
+
+                </tbody>
+
+            </table>
+            <h4 style="text-align:center">Total price: {{ total }} USD</h4>
+            <div class="mt-2 col-md-12"></div>
+            <div class="mt-2 col-md-12"></div>
+
+            <div style="text-align: center;">
+                <a href="{% url "cart_checkout" %}"><input class="btn btn-success btn-lg btn-block" type="button" value="Check Out">
+                </a>
+            </div>
+
+            <div class="mt-2 col-md-12"></div>
+            <div class="mt-2 col-md-12"></div>
+
+            <div style="text-align: center;">
+                <a href="{% url ""%}"><input class="btn-outline-danger btn-sm" type="button" value="Delete order">
+                </a>
+            </div>
+
+
+        </div>
+
+
+    {% endif %}
 {% endblock %}
-</html>
