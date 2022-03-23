@@ -4,13 +4,21 @@ body {
     padding-top: 20px;
 }
 
+.nav-item{
+    text-outline: #d9181d;
+}
+
 .navbar {
     padding-left:10px;
     padding-right: 20px;
     margin-bottom: 0;
+    margin-top: 0;
     margin-left: 0;
-    margin-right: 200px;
+    margin-right: 0px;
     border-radius: 0;
+    color: #d9181d;
+    font-size: xx-large;
+
 }
 
 
@@ -36,14 +44,14 @@ h1 a {
 .sidenav {
     padding-top: 20px;
     padding-left: 20px;
-    background-color: #f1f1f1;
+    background-color: black;
     height: 100%;
 }
 
 /* Set black background color, white text and some padding */
 footer {
-    background-color: #555;
-    color: white;
+    background-color: #d9181d;
+    color: black;
     padding: 15px;
 }
 

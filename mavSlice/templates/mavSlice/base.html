@@ -16,17 +16,11 @@
 
     <div class="navbar-header" href="">
         <!-- Logo -->
-        <a class="navbar-brand" href="">
-            MavSlice Pizza
-        </a>
-    <nav class="navbar navbar-expand-md bg-secondary navbar-dark" id="myNavbar">
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom" id="myNavbar">
 
         <ul class="navbar-nav mr-auto">
             <li class="navbar-brand"></li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'mavSlice:home' %}">Home</a>
-            </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'mavSlice:home' %}">Home</a>
             </li>
@@ -37,6 +31,12 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'mavSlice:Cart' %}">Cart</a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav mm-auto">
+            <li class="nav-title">
+                <b>MavSlice</b>
             </li>
         </ul>
 
