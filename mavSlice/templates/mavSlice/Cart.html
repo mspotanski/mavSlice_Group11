@@ -1,7 +1,7 @@
-{% extends 'mavSlice/base.html' %}
+{% extends "base.html" %}
 
 {% block body %}
-    {% if total == 0 %}
+    {% if price_all == 0 %}
         <h1>You don't have anything in cart</h1>
     {% else %}
         <div class="col-12">
@@ -14,7 +14,7 @@
                 </thead>
                 <tbody>
                 {% if Pizza %}
-                    {% for item in Product %}
+                    {% for item in Pizza %}
                         <tr>
                             <td>{{ item }}</td>
                             <td>{{ item.price }} USD</td>
@@ -23,15 +23,15 @@
                 {% endif %}
 
 
-                </tbody>
+
 
             </table>
-            <h4 style="text-align:center">Total price: {{ total }} USD</h4>
+            <h4 style="text-align:center">Overall price: {{ price_all }} USD</h4>
             <div class="mt-2 col-md-12"></div>
             <div class="mt-2 col-md-12"></div>
 
             <div style="text-align: center;">
-                <a href="{% url "cart_checkout" %}"><input class="btn btn-success btn-lg btn-block" type="button" value="Check Out">
+                <a href="{% url "make_order" %}"><input class="btn btn-success btn-lg btn-block" type="button" value="Make order">
                 </a>
             </div>
 
@@ -39,7 +39,7 @@
             <div class="mt-2 col-md-12"></div>
 
             <div style="text-align: center;">
-                <a href="{% url ""%}"><input class="btn-outline-danger btn-sm" type="button" value="Delete order">
+                <a href="{% url "clear_cart" %}"><input class="btn-outline-danger btn-sm" type="button" value="Delete order">
                 </a>
             </div>
 
