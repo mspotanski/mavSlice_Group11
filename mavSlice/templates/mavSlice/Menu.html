@@ -3,13 +3,67 @@
 {% extends 'mavSlice/base.html' %}
 {% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Menu</title>
-</head>
-<body>
-This is the menu
+<div>
+     <nav class="navbar navbar-expand-sm bg-light navbar-light justify-context-center" id="Deals">
+          <ul class="nav navbar-nav mm-auto">
+            <li class="nav-title">
+                <b>Deals</b>
+            </li>
+        </ul>
+</div>
 
-</body>
+
+<div>
+Menu
+</div>
+
+
+
+
+    <div class="content container">
+        <!-- Example row of columns using cards for alignment
+             The value of 'col-md-x' for all columns in the row must add up to 12
+             This page has 3 columns, each column uses col-md-4, for a total of 12 -->
+        <div class="row">
+            <div class="col-md-4 d-flex align-items-stretch">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Pepperoni za</h5>
+                        <p class="card-text">add image here</p>
+                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
+                              role="button">Add to cart &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+
+           <div class="col-md-4 d-flex align-items-stretch">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Supreme za</h5>
+                        <p class="card-text">add image here</p>
+                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
+                              role="button">Add to cart &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+           <div class="col-md-4 d-flex align-items-stretch">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Cheese za</h5>
+                        <p class="card-text">add image here</p>
+                        <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
+                              role="button">Add to cart &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 {% endblock %}
 </html>

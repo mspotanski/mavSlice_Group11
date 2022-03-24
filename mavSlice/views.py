@@ -15,14 +15,32 @@ def home(request):
                   {'Home': home})
 
 
+
+
 def Menu(request):
     return render(request, 'mavSlice/Menu.html',
                   {'Menu': Menu})
 
 
+
+
 def Cart(request):
+    #price_all = Decimal(calculate_cart_price(request.user))
+    #context = {}
+    #context.update ({"price_all": price_all})
+    #context.update({"Pizza": Product.objects.filter(add_by=request.user).filter(already_ordered=False)})
+
+
     return render(request, 'mavSlice/Cart.html',
-                  {'Cart': Cart})
+                  {'Cart': Cart})s
+
+
+#def calculate_cart_price(username):
+    #price_all = 0
+    #for obj in Product.objects.filter(add_by=username).filter(already_ordered=False):
+        #price_all += obj.price
+    #return price_all
+
 
 
 @login_required
