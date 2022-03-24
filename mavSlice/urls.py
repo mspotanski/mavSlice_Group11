@@ -15,12 +15,16 @@ Including another URLconf
 """
 # from django.conf.urls import url
 from . import views
+from .views import register_view, login_view, logout_view
 from django.urls import path, re_path
 
 app_name = 'mavSlice'
 urlpatterns = [
     path('', views.home, name='home'),
     re_path(r'^home/$', views.home, name='home'),
+    path("register", register_view, name="register_view"),
+    path("login", login_view, name="login_view"),
+    path("logout", logout_view, name="logout_view"),
     path('Menu/', views.Menu, name='Menu'),
     path('Cart/', views.Cart, name='Cart'),
     path('Cart/delivery/', views.cart_delivery, name='cart_delivery'),
