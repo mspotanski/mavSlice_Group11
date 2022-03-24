@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.utils import timezone
+import decimal
 from django.contrib.auth.models import User, AbstractUser
 # 3/15/2022: Unfinished work = determining Product price, storing payment info
 # 3/22/2022: Unfinished work = accessing user data, all from 3/15/2022
