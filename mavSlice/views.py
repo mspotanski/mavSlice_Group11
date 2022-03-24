@@ -65,14 +65,27 @@ def logout_view(request):
         return redirect("index")
 
 
+
+
 def Menu(request):
     return render(request, 'mavSlice/Menu.html',
                   {'Menu': Menu})
 
 
 def Cart(request):
+    # price_all = Decimal(calculate_cart_price(request.user))
+    # context = {}
+    # context.update ({"price_all": price_all})
+    # context.update({"Pizza": Product.objects.filter(add_by=request.user).filter(already_ordered=False)})
     return render(request, 'mavSlice/Cart.html',
                   {'Cart': Cart})
+
+
+# def calculate_cart_price(username):
+    # price_all = 0
+    # for obj in Product.objects.filter(add_by=username).filter(already_ordered=False):
+        # price_all += obj.price
+    # return price_all
 
 
 @login_required
@@ -177,7 +190,7 @@ def ProductEdit(request, pk):
 
 
 @login_required
-def product_delete(request):
+def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.delete()
     return redirect('mavSlice:product_list')
@@ -196,4 +209,3 @@ def user_info_delivery(request):
 @login_required
 def user_info_payment(request):
     pass
-
