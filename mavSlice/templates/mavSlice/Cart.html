@@ -13,11 +13,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if Pizza %}
-                    {% for item in Pizza %}
+                {% if Product %}
+                    {% for product in products %}
                         <tr>
-                            <td>{{ item }}</td>
-                            <td>{{ item.price }} USD</td>
+                            <td>{{ product }}</td>
+                            <td>{{ product.price }} USD</td>
                         </tr>
                     {% endfor %}
                 {% endif %}
@@ -26,7 +26,7 @@
 
 
             </table>
-            <h4 style="text-align:center">Overall price: {{ price_all }} USD</h4>
+            <h4 style="text-align:center">Overall price: {{ order_price }} USD</h4>
             <div class="mt-2 col-md-12"></div>
             <div class="mt-2 col-md-12"></div>
 

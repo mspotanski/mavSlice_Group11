@@ -15,8 +15,6 @@ def home(request):
                   {'Home': home})
 
 
-
-
 def Menu(request):
     return render(request, 'mavSlice/Menu.html',
                   {'Menu': Menu})

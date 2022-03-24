@@ -136,12 +136,12 @@ class Order(models.Model):
     completed_time = models.DateTimeField(default=timezone.now)
     # NOT Finished
     # Need to determine how to grab the price for each individual product
-    #
-    # def determine_order_price(self.products):
-    #     total = 0
-    #     for product in products:
-    #         total += product.get_price()
-    #     return total
+
+    def determine_order_price(self):
+        total = 0
+        for product in Product.objects.filter():
+            total += product.get_price()
+        return total
 
 #
 # class checkout(models.Model):
