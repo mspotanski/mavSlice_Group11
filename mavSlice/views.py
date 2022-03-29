@@ -207,3 +207,4 @@ def user_info_delivery(request):
 @login_required
 def user_info_payment(request):
     pass
+
