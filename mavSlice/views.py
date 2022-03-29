@@ -11,14 +11,10 @@ from .forms import *
 from django.http import HttpResponseNotFound
 
 
-
-# Do you need a model for every view?
-# How to render a request not based on the model?
-
-
 def home(request):
     return render(request, 'mavSlice/home.html',
                   {'Home': home})
+
 
 def register_view(request):
     if not request.user.is_authenticated:
@@ -37,6 +33,7 @@ def register_view(request):
         return render(request, 'registration/register.html', context)
     else:
         return redirect("index")
+
 
 def login_view(request):
     if not request.user.is_authenticated:
@@ -58,6 +55,7 @@ def login_view(request):
         return render(request, 'registration/login.html', context)
     else:
         return redirect("index")
+
 
 def logout_view(request):
         if request.user.is_authenticated:
@@ -206,5 +204,25 @@ def user_info_delivery(request):
 
 @login_required
 def user_info_payment(request):
+    pass
+
+
+def determine_order_price(request):
+    pass
+
+
+def add_product(request):
+    pass
+
+
+def update_order(request):
+    pass
+
+
+def add_topping(request):
+    pass
+
+
+def add_product(request):
     pass
 

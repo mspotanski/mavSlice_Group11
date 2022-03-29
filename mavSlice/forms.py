@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
@@ -29,14 +30,10 @@ class RegistrationForm(UserCreationForm):
         return User
 
 
-
-
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('name', 'toppings', 'price')
-
-
 
 
 # NOT FINISHED

@@ -105,22 +105,10 @@ class Toppings(models.Model):
     # Each added topping adds 0.30 to slice or 0.65 to whole pizza
     # None indicates a pizza with only Cheese
     # If blank, then default goes to 'None'
-    TOP_PEPPERONI = 'Pepperoni'
-    TOP_BEEF = 'Beef'
-    TOP_SAUSAGE = 'Italian Sausage'
-    TOP_CAN_BACON = 'Canadian Bacon'
-    TOP_BACON = 'Bacon'
-    TOP_CHKN = 'Chicken'
-    TOP_GRN_PEPPER = 'Green Pepper'
-    TOP_JALEPENO = 'Jalapeno'
-    TOP_ONION = 'Onion'
-    TOP_BAN_PEPPER = 'Banana Pepper'
-    TOP_BLK_OLIVE = 'Black Olive'
-    TOP_NONE = 'None'
-    PRODUCT_TOPPINGS = ((TOP_PEPPERONI, 'Pepperoni'), (TOP_BEEF, 'Beef'), (TOP_SAUSAGE, 'Italian Sausage'),
-                        (TOP_CAN_BACON, 'Canadian Bacon'), (TOP_BACON, 'Bacon'), (TOP_CHKN, 'Chicken'),
-                        (TOP_GRN_PEPPER, 'Green Pepper'), (TOP_JALEPENO, 'Jalapeno'), (TOP_ONION, 'Onion'),
-                        (TOP_BAN_PEPPER, 'Banana Pepper'), (TOP_BLK_OLIVE, 'Black Olive'), (TOP_NONE, 'None'))
+    PRODUCT_TOPPINGS = (('TOP_PEPP', 'Pepperoni'), ('TOP_BF', 'Beef'), ('TOP_SAUS', 'Italian Sausage'),
+                        ('TOP_CA_BAC', 'Canadian Bacon'), ('TOP_BAC', 'Bacon'), ('TOP_CHKN', 'Chicken'),
+                        ('TOP_GRN_PEP', 'Green Pepper'), ('TOP_JAL', 'Jalapeno'), ('TOP_ONION', 'Onion'),
+                        ('TOP_BAN_PEP', 'Banana Pepper'), ('TOP_BLK_OLV', 'Black Olive'), ('TOP_NONE', 'None'))
     name = models.CharField(max_length=15, choices=PRODUCT_TOPPINGS, null=False, blank=True, default='None')
 
 
@@ -140,11 +128,11 @@ class Order(models.Model):
     # NOT Finished
     # Need to determine how to grab the price for each individual product
 
-    def determine_order_price(self):
-        total = 0
-        for product in Product.objects.filter():
-            total += product.get_price()
-        return total
+    # def determine_order_price(self):
+    #     total = 0
+    #     for product in Product.objects.filter():
+    #         total += product.get_price()
+    #     return total
 
 #
 # class checkout(models.Model):
