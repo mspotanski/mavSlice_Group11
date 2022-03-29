@@ -13,9 +13,16 @@ class CustomerList(admin.ModelAdmin):
     #                'delivery_info.zipCode')
     #list_filter = ('user.last_name', 'cust_id',)
     list_filter = ('cust_id',)
-    search_fields = ('cust_id', 'user.first_name', 'user.last_name', 'user.email', 'delivery_info.zipCode')
+    search_fields = ('cust_id',)
     # ordering = ['user.last_name', 'cust_id']
     ordering = ['cust_id']
+
+
+class DeliveryList(admin.ModelAdmin):
+    list_display = ('street_address', 'street_address2', 'city', 'state', 'zipCode',)
+    list_filter = ('user',)
+    search_fields = ('user', 'state', 'city', 'street_address', 'street_address2', 'zipCode',)
+    ordering = ['zipCode']
 
 
 # Define the admin options for the Order table
@@ -50,3 +57,4 @@ admin.site.register(Customer, CustomerList)
 admin.site.register(Order, OrderList)
 admin.site.register(Product, ProductList)
 admin.site.register(Toppings, ToppingsList)
+admin.site.register(Delivery, DeliveryList)

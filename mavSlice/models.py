@@ -133,7 +133,3 @@ class Order(models.Model):
     #     for product in Product.objects.filter():
     #         total += product.get_price()
     #     return total
-
-#
-# class checkout(models.Model):
-#     pass
