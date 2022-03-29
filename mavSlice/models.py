@@ -62,8 +62,10 @@ class Product(models.Model):
     PRODUCT_TYPES = ((TYPE_SLICE, 'Slice'), (TYPE_WHOLE_PIE, 'Whole Pie'))
     # PRODUCT_PIZZA_NAMES shows all possible flavors of Pizza as well as their number of toppings
     # Toppings determine price (i.e. more toppings = more expensive)
-    PRODUCT_PIZZAS = (('Cheese', 0), ('Pepperoni', 1), ('Beef', 1), ('Italian Sausage', 1), ('Canadian Bacon', 1),
-                      ('Chicken Alfredo', 2), ('Supreme', 5), ('Meat Lovers', 5), ('Philly', 5), ('BBQ Chicken', 3))
+    PRODUCT_PIZZAS = (('CHS', 'Cheese'), ('PEPP', 'Pepperoni'), ('BF', 'Beef'),
+                      ('ITL_SAUS', 'Italian Sausage'), ('CA_BAC', 'Canadian Bacon'),
+                      ('CHKN_ALF', 'Chicken Alfredo'), ('SPRM', 'Supreme'), ('MT_LOVE', 'Meat Lovers'),
+                      ('PHIL', 'Philly'), ('BBQ_CHKN', 'BBQ Chicken'))
     # PRODUCT_SAUCES is a list of all possible sauces for a pizza
     # Sauce does NOT affect price
     SAUCE_MARINARA = 'Classic Marinara'
