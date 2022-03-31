@@ -1,17 +1,28 @@
-{% extends "layout.html" %}
-{% block body %}
-    {% load crispy_forms_tags %}
-    <div class="mt-2 col-md-12"></div>
+<!DOCTYPE html>
+{% extends "mavSlice/base.html" %}
 
-    <div class="d-flex justify-content-center">
+{% block title %}Log In{% endblock title %}
 
-        <form method="post" autocomplete="off" action="{% url "login_view" %}">
-            {% csrf_token %}
+{% block content %}
+<h2>Log In</h2>
+    {%  if form.errors %}
+    <p>
+    Your username and password didn't match.
+    Please try again.
+    </p>
 
-            {{ form | crispy }}
-
-            <input type="submit" value="Log in">
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
+    {%  endif %}
+    <div class="login-form">
+     <form action=""{%  url 'login' %} method="post">
+         {{  form.as_p }}
+         {%  csrf_token %}
+         <input type="hidden" name="next" value="{{  next }}"/>
+         <p></p><input type="submit" value="Log-in"></p>
+     </form>
     </div>
-{% endblock %}
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+<p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+
+</form>
+{% endblock content %}

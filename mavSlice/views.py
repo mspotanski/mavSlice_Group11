@@ -62,6 +62,9 @@ def logout_view(request):
             logout(request)
         return redirect("index")
 
+def login(request):
+    return render(request, 'registration/login.html',
+                  {'login': login})
 
 def Menu(request):
     return render(request, 'mavSlice/Menu.html',
