@@ -17,7 +17,7 @@
     <div class="navbar-header" href="   ">
         <!-- Logo -->
 
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom" id="myNavbar">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="myNavbar">
 
         <ul class="navbar-nav mr-auto">
             <li class="navbar-brand"></li>
@@ -25,8 +25,14 @@
                 <a class="nav-link" href="{% url 'mavSlice:home' %}">Home</a>
             </li>
 
-            <li class="nav-item">
-               <a class="nav-link" href="{% url 'mavSlice:Menu' %}">Menu</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                     Menu
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'mavSlice:Menu' %}">Pre-made Pizzas</a>
+                    <a class="dropdown-item" href="{% url 'mavSlice:custom' %}">Custom Pizza</a>
+                </div>
             </li>
 
             <li class="nav-item">

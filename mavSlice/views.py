@@ -72,6 +72,10 @@ def Menu(request):
     return render(request, 'mavSlice/Menu.html',
                   {'Menu': Menu})
 
+def custom(request):
+    return render(request, 'mavSlice/custom.html',
+                  {'custom': custom})
+
 
 def Cart(request):
     # price_all = Decimal(calculate_cart_price(request.user))
