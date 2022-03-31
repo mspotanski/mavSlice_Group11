@@ -37,10 +37,10 @@ class ProductForm(forms.ModelForm):
 
 
 # NOT FINISHED
-class ToppingsForm(forms.ModelForm):
-    class Meta:
-        model = Toppings
-        fields = ('name',)
+# class ToppingsForm(forms.ModelForm):
+#     class Meta:
+#         model = Toppings
+#         fields = ('name',)
 
 
 # NOT FINISHED

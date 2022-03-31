@@ -28,7 +28,7 @@ class Delivery(models.Model):
     # Look at django Address Class, we may be able to get rid of this whole Class
     delivery_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                                    help_text='Unique ID for this specific order-delivery information')
-    user = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=False)
+    customer = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
     street_address = models.CharField(max_length=250, null=False)
     street_address2 = models.CharField(max_length=250, null=True, blank=True, help_text='Apt number, building, etc.')
     # Note that for this project, our store will only be in Omaha, so these fields could be eliminated theoretically
@@ -48,6 +48,10 @@ class Coupon(models.Model):
     coupon_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                                  help_text='Unique ID for given Coupon and its discount')
     totalDiscount = models.DecimalField(blank=True, default=0.00, decimal_places=2, max_digits=5)
+    name = models.CharField(blank=True, default='NA')
+
+    def __str__(self):
+        return '{name}: {discount}'.format(name=self.name, discount=self.totalDiscount)
 
 
 class Product(models.Model):
@@ -57,30 +61,38 @@ class Product(models.Model):
     # There is also only one type of crust if you were curious
     TYPE_SLICE = 'Slice'
     TYPE_WHOLE_PIE = 'Whole Pie'
-    SLICE_BASE_PRICE = 3
-    WHOLE_PIE_BASE_PRICE = 14
+    # SLICE_BASE_PRICE = 3
+    # WHOLE_PIE_BASE_PRICE = 14
     PRODUCT_TYPES = ((TYPE_SLICE, 'Slice'), (TYPE_WHOLE_PIE, 'Whole Pie'))
     # PRODUCT_PIZZA_NAMES shows all possible flavors of Pizza as well as their number of toppings
-    # Toppings determine price (i.e. more toppings = more expensive)
     PRODUCT_PIZZAS = (('CHS', 'Cheese'), ('PEPP', 'Pepperoni'), ('BF', 'Beef'),
                       ('ITL_SAUS', 'Italian Sausage'), ('CA_BAC', 'Canadian Bacon'),
                       ('CHKN_ALF', 'Chicken Alfredo'), ('SPRM', 'Supreme'), ('MT_LOVE', 'Meat Lovers'),
                       ('PHIL', 'Philly'), ('BBQ_CHKN', 'BBQ Chicken'))
+
     # PRODUCT_SAUCES is a list of all possible sauces for a pizza
     # Sauce does NOT affect price
-    SAUCE_MARINARA = 'Classic Marinara'
-    SAUCE_GARLIC_PARM = 'Garlic Parm'
-    SAUCE_BUFFALO = 'Buffalo'
-    SAUCE_BBQ = 'BBQ'
-    SAUCE_NONE = 'None'
-    PRODUCT_SAUCES = ((SAUCE_MARINARA, 'Classic Marinara'), (SAUCE_GARLIC_PARM, 'Garlic Parm'),
-                      (SAUCE_BUFFALO, 'Buffalo'), (SAUCE_BBQ, 'BBQ'), (SAUCE_NONE, 'None'))
+    PRODUCT_SAUCES = (('MARINARA', 'Classic Marinara'), ('G_PARM', 'Garlic Parm'),
+                      ('BUF', 'Buffalo'), ('BBQ', 'Barbecue'), ('NA', 'None'))
+
+    # Toppings determine price (i.e. more toppings = more expensive)
+    # Topping price if Product.Type == Slice = 0.30
+    # Topping price if Product.Type == Whole = 0.60
+    PRODUCT_TOPPINGS = (('TOP_PEPP', 'Pepperoni'), ('TOP_BF', 'Beef'), ('TOP_SAUS', 'Italian Sausage'),
+                        ('TOP_CA_BAC', 'Canadian Bacon'), ('TOP_BAC', 'Bacon'), ('TOP_CHKN', 'Chicken'),
+                        ('TOP_GRN_PEP', 'Green Pepper'), ('TOP_JAL', 'Jalapeno'), ('TOP_ONION', 'Onion'),
+                        ('TOP_BAN_PEP', 'Banana Pepper'), ('TOP_BLK_OLV', 'Black Olive'), ('TOP_NONE', 'None'))
+
     product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a Product')
     type = models.CharField(max_length=10, choices=PRODUCT_TYPES, blank=False, default='Whole Pie')
     name = models.CharField(max_length=20, choices=PRODUCT_PIZZAS, blank=False, default='Cheese')
-    toppings = models.ManyToManyField('Toppings', blank=True, related_name='toppings')
+    description = models.CharField(max_length=1000, blank=True)
+    has_toppings = models.BooleanField
+    has_extra_cheese = models.BooleanField
+    has_extra_toppings = models.BooleanField
+    has_sauce = models.BooleanField
     coupon = models.ManyToManyField('Coupon', blank=True)
-    sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
+    # sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
     price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=6, decimal_places=2)
 
     def get_price(self):
@@ -89,27 +101,34 @@ class Product(models.Model):
     def get_type(self):
         return self.type
 
+    def set_price(self, value):
+        if value >= 0:
+            self.price = value
+
+    def __str__(self):
+        return self.description
+
     # Finds and determines the price of a product based on the product type and number of toppings
     # NOT FINISHED
     # Need to determine proper way to get the number of toppings from the product
-    def determine_product_price(self):
-        if self.type == 'Slice':
-            total = round(3 + (0.30 * len(self.toppings)), 2)
-        else:  # self.type == 'Whole Pie'
-            total = round(14 + (0.65 * len(self.toppings)), 2)
-        return total
+    # def determine_product_price(self):
+    #     if self.type == 'Slice':
+    #         total = round(3 + (0.30 * len(self.toppings)), 2)
+    #     else:  # self.type == 'Whole Pie'
+    #         total = round(14 + (0.65 * len(self.toppings)), 2)
+    #     return total
 
 
-class Toppings(models.Model):
-    # PRODUCT_TOPPINGS shows all possible toppings for a pizza
-    # Each added topping adds 0.30 to slice or 0.65 to whole pizza
-    # None indicates a pizza with only Cheese
-    # If blank, then default goes to 'None'
-    PRODUCT_TOPPINGS = (('TOP_PEPP', 'Pepperoni'), ('TOP_BF', 'Beef'), ('TOP_SAUS', 'Italian Sausage'),
-                        ('TOP_CA_BAC', 'Canadian Bacon'), ('TOP_BAC', 'Bacon'), ('TOP_CHKN', 'Chicken'),
-                        ('TOP_GRN_PEP', 'Green Pepper'), ('TOP_JAL', 'Jalapeno'), ('TOP_ONION', 'Onion'),
-                        ('TOP_BAN_PEP', 'Banana Pepper'), ('TOP_BLK_OLV', 'Black Olive'), ('TOP_NONE', 'None'))
-    name = models.CharField(max_length=15, choices=PRODUCT_TOPPINGS, null=False, blank=True, default='None')
+# class Toppings(models.Model):
+#     # PRODUCT_TOPPINGS shows all possible toppings for a pizza
+#     # Each added topping adds 0.30 to slice or 0.65 to whole pizza
+#     # None indicates a pizza with only Cheese
+#     # If blank, then default goes to 'None'
+#     PRODUCT_TOPPINGS = (('TOP_PEPP', 'Pepperoni'), ('TOP_BF', 'Beef'), ('TOP_SAUS', 'Italian Sausage'),
+#                         ('TOP_CA_BAC', 'Canadian Bacon'), ('TOP_BAC', 'Bacon'), ('TOP_CHKN', 'Chicken'),
+#                         ('TOP_GRN_PEP', 'Green Pepper'), ('TOP_JAL', 'Jalapeno'), ('TOP_ONION', 'Onion'),
+#                         ('TOP_BAN_PEP', 'Banana Pepper'), ('TOP_BLK_OLV', 'Black Olive'), ('TOP_NONE', 'None'))
+#     name = models.CharField(max_length=15, choices=PRODUCT_TOPPINGS, null=False, blank=True, default='None')
 
 
 class Order(models.Model):

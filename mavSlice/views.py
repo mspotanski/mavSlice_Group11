@@ -62,9 +62,11 @@ def logout_view(request):
             logout(request)
         return redirect("index")
 
+
 def login(request):
     return render(request, 'registration/login.html',
                   {'login': login})
+
 
 def Menu(request):
     return render(request, 'mavSlice/Menu.html',
@@ -100,39 +102,6 @@ def checkout(request):
 
 
 @login_required
-def customer_list(request):
-    customer = User.objects.filter()
-    return render(request, 'mavSlice/customer_list.html',
-                  {'customers': customer})
-
-
-@login_required
-def order_list(request):
-    order = Order.objects.filter()
-    return render(request, 'mavSlice/order_list.html',
-                  {'orders': order})
-
-
-@login_required
-def order_completed_list(request):
-    completed_order = Order.objects.filter()
-    return render(request, 'mavSlice/order_completed_list.html',
-                  {'completed orders': completed_order})
-
-
-@login_required
-def order_not_completed_list(request):
-    not_completed_order = Order.objects.filter()
-    return render(request, 'mavSlice/order_NOT_completed_list.html',
-                  {'Non completed orders': not_completed_order})
-
-
-@login_required
-def order_mark_as_completed(request):
-    pass
-
-
-@login_required
 def order_confirmation(request):
     pass
 
@@ -142,57 +111,6 @@ def coupon_list(request):
     coupon = Coupon.objects.filter()
     return render(request, 'mavSlice/coupon_list.html',
                   {'coupons': coupon})
-
-
-@login_required
-def coupon_new(request):
-    pass
-
-
-@login_required
-def coupon_edit(request):
-    pass
-
-
-@login_required
-def product_list(request):
-    pass
-
-
-@login_required
-def product_info(request):
-    pass
-
-
-@login_required
-def product_new(request):
-    pass
-
-
-@login_required
-def ProductEdit(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == "POST":
-        # Update
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            product = form.save(commit=False)
-            product.updated_date = timezone.now()
-            product.save()
-            product = Product.objects.filter()
-            return render(request, 'mavSlice/product_list.html',
-                          {'products': product})
-        else:
-            # edit
-            form = ProductForm(instance=product)
-        return render(request, 'mavSlice/ProductEdit.html', {'form': form})
-
-
-@login_required
-def product_delete(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    product.delete()
-    return redirect('mavSlice:product_list')
 
 
 @login_required
@@ -219,13 +137,5 @@ def add_product(request):
 
 
 def update_order(request):
-    pass
-
-
-def add_topping(request):
-    pass
-
-
-def add_product(request):
     pass
 
