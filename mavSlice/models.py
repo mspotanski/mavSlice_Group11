@@ -6,22 +6,15 @@ from django.contrib.auth.models import User, AbstractUser
 # 3/15/2022: Unfinished work = determining Product price, storing payment info
 # 3/22/2022: Unfinished work = accessing user data, all from 3/15/2022
 
+# accounts/models.py
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
-class Customer(models.Model):
-    # We only have to add our extra variables here
-    # Current authentication uses username, may need to switch to email
-    cust_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Customer')
-    delivery_info = models.OneToOneField('Delivery', null=True, on_delete=models.CASCADE)
+class CustomUser(AbstractUser):
+    # add additional fields in here
 
-    def get_user_email(self):
-        return self.user.email
-
-    def get_user_first_name(self):
-        return self.user.first_name
-
-    def get_user_last_name(self):
-        return self.user.last_name
+    def __str__(self):
+        return self.email
 
 
 class Delivery(models.Model):

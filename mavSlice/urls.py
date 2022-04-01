@@ -5,7 +5,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 Examples:
 Function views
     1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+    2. Add a URL to urlpatterns:  path('', views. Home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
@@ -17,14 +17,12 @@ Including another URLconf
 from . import views
 from .views import register_view, login_view, logout_view
 from django.urls import path, re_path
-
+from .views import HomePageView
 app_name = 'mavSlice'
 urlpatterns = [
     path('', views.home, name='home'),
     re_path(r'^home/$', views.home, name='home'),
-    path("register", register_view, name="register_view"),
-    path("login", login_view, name="login_view"),
-    path("logout", logout_view, name="logout_view"),
+    path('', HomePageView.as_view(), name='home'),
     path('Menu/', views.Menu, name='Menu'),
     path('Cart/', views.Cart, name='Cart'),
     path('custom/', views.custom, name='custom'),

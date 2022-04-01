@@ -8,10 +8,10 @@ from .models import *
 # Delivery info includes: address,
 class CustomerList(admin.ModelAdmin):
     list_display = ('cust_id',)
-    # list_display = ('cust_id', 'user.email', 'user.first_name', 'user.last_name', 'delivery_info.street_address',
+    #list_display = ('cust_id', 'user.email', 'user.first_name', 'user.last_name', 'delivery_info.street_address',
     #                'delivery_info.street_address2', 'delivery_info.city', 'delivery_info.state',
     #                'delivery_info.zipCode')
-    # list_filter = ('user.last_name', 'cust_id',)
+    #list_filter = ('user.last_name', 'cust_id',)
     list_filter = ('cust_id',)
     search_fields = ('cust_id',)
     # ordering = ['user.last_name', 'cust_id']
@@ -29,7 +29,7 @@ class DeliveryList(admin.ModelAdmin):
 # Should be able to display Order ID,
 class OrderList(admin.ModelAdmin):
     list_display = ('order_id', 'customer', 'coupon', 'order_price', 'placed_time', 'completed_time')
-    # list_display = ('order_id', 'products', 'customer', 'coupon', 'order_price', 'placed_time', 'completed_time')
+    #list_display = ('order_id', 'products', 'customer', 'coupon', 'order_price', 'placed_time', 'completed_time')
     list_filter = ('customer', 'order_id')
     # list_filter = ('placed_time', 'customer', 'order_id')
     search_fields = ('customer', 'order_id', 'products', 'coupon', 'placed_time', 'completed_time')
@@ -45,16 +45,16 @@ class ProductList(admin.ModelAdmin):
     ordering = ['name', 'product_id']
 
 
-# class ToppingsList(admin.ModelAdmin):
-#     list_display = ('name',)
-#     list_filter = ('name',)
-#     search_fields = ('name', )
-#     ordering = ['name']
+class ToppingsList(admin.ModelAdmin):
+    list_display = ('name',)
+    list_filter = ('name',)
+    search_fields = ('name', )
+    ordering = ['name']
 
 
 # register the Service and Product with the django admin page
 admin.site.register(Customer, CustomerList)
 admin.site.register(Order, OrderList)
 admin.site.register(Product, ProductList)
-# admin.site.register(Toppings, ToppingsList)
+admin.site.register(Toppings, ToppingsList)
 admin.site.register(Delivery, DeliveryList)
