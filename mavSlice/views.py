@@ -32,6 +32,7 @@ def Menu(request):
     return render(request, 'mavSlice/Menu.html',
                   {'Menu': Menu})
 
+
 def custom(request):
     return render(request, 'mavSlice/custom.html',
                   {'custom': custom})
