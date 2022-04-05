@@ -30,7 +30,7 @@ def custom(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = signupForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
@@ -45,7 +45,7 @@ def signup(request):
             # redirect user to home page
             return redirect('home')
     else:
-        form = SignUpForm()
+        form = signupForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 
