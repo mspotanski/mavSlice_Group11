@@ -7,9 +7,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum
 from _decimal import Decimal
 from .models import *
-from .forms import *
+from .forms import signupForm
 from django.http import HttpResponseNotFound
 from django.views.generic import TemplateView
+
 
 
 def home(request):
@@ -25,6 +26,27 @@ def Menu(request):
 def custom(request):
     return render(request, 'mavSlice/custom.html',
                   {'custom': custom})
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            # load the profile instance created by the signal
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+
+            # login user after signing up
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+
+            # redirect user to home page
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 def Cart(request):
