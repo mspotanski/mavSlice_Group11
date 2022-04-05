@@ -12,20 +12,18 @@ from django.http import HttpResponseNotFound
 from django.views.generic import TemplateView
 
 
-class HomePageView(TemplateView):
-    template_name = 'home.html'
+# class HomePageView(TemplateView):
+#     template_name = 'home.html'
+
 
 def home(request):
     return render(request, 'mavSlice/home.html',
                   {'Home': home})
 
 
-
-
-
-def login(request):
-    return render(request, 'registration/login.html',
-                  {'login': login})
+# def login(request):
+#     return render(request, 'registration/login.html',
+#                   {'login': login})
 
 
 def Menu(request):
@@ -69,13 +67,6 @@ def checkout(request):
 @login_required
 def order_confirmation(request):
     pass
-
-
-@login_required
-def coupon_list(request):
-    coupon = Coupon.objects.filter()
-    return render(request, 'mavSlice/coupon_list.html',
-                  {'coupons': coupon})
 
 
 @login_required

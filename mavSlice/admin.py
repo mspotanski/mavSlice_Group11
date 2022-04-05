@@ -1,10 +1,9 @@
 from django.contrib import admin
 from .models import *
-# 3/22/2022 Unfinished work: accessing user data from customer for CustomerList
-
-
 # Define the admin options for the Customer table
 # Should be able to see name, email, Delivery information, user_id
+
+
 # Delivery info includes: address,
 class CustomerList(admin.ModelAdmin):
     list_display = ('cust_id',)
@@ -45,16 +44,8 @@ class ProductList(admin.ModelAdmin):
     ordering = ['name', 'product_id']
 
 
-class ToppingsList(admin.ModelAdmin):
-    list_display = ('name',)
-    list_filter = ('name',)
-    search_fields = ('name', )
-    ordering = ['name']
-
-
 # register the Service and Product with the django admin page
-admin.site.register(Customer, CustomerList)
+admin.site.register(User, CustomerList)
 admin.site.register(Order, OrderList)
 admin.site.register(Product, ProductList)
-admin.site.register(Toppings, ToppingsList)
 admin.site.register(Delivery, DeliveryList)
