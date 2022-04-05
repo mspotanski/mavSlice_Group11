@@ -21,7 +21,7 @@ class CustomUserChangeForm(UserChangeForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('name', 'toppings', 'price')
+        fields = ('name', 'description', 'price')
 
 
 # NOT FINISHED
@@ -35,7 +35,7 @@ class ProductForm(forms.ModelForm):
 class OrdersForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('order_id', 'User', 'products', 'coupon', 'order_price', 'delivery',)
+        fields = ('order_id', 'customer', 'products', 'coupon', 'order_price', 'delivery',)
 
 
 # NOT FINISHED

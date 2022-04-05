@@ -9,7 +9,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class User(AbstractUser):
+class Customer(AbstractUser):
     # add additional fields in here
     delivery_info = User = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
 
@@ -40,7 +40,7 @@ class Coupon(models.Model):
     coupon_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                                  help_text='Unique ID for given Coupon and its discount')
     totalDiscount = models.DecimalField(blank=True, default=0.00, decimal_places=2, max_digits=5)
-    name = models.CharField(blank=True, default='NA')
+    name = models.CharField(blank=True, default='NA', max_length=25)
 
     def __str__(self):
         return '{name}: {discount}'.format(name=self.name, discount=self.totalDiscount)
@@ -127,8 +127,8 @@ class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a specific Order')
     # Zero to many relationship from User to Order
     # OneToOne relationship from Order to User
-    # User = models.OneToOneField('User', primary_key=True, on_delete=models.CASCADE)
-    User = models.ForeignKey('User', on_delete=models.CASCADE)
+    customer = models.OneToOneField('Customer', on_delete=models.CASCADE, help_text='User who placed order')
+    # User = models.ForeignKey('User', on_delete=models.CASCADE)
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)

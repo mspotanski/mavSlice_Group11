@@ -12,18 +12,9 @@ from django.http import HttpResponseNotFound
 from django.views.generic import TemplateView
 
 
-# class HomePageView(TemplateView):
-#     template_name = 'home.html'
-
-
 def home(request):
     return render(request, 'mavSlice/home.html',
                   {'Home': home})
-
-
-# def login(request):
-#     return render(request, 'registration/login.html',
-#                   {'login': login})
 
 
 def Menu(request):
