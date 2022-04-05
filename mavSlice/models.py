@@ -11,7 +11,10 @@ from django.db import models
 
 class Customer(AbstractUser):
     # add additional fields in here
-    delivery_info = User = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
+    cust_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
+                               help_text='Unique ID for this specific order-delivery information')
+    delivery_info = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
+
 
     def __str__(self):
         return self.email
@@ -19,8 +22,7 @@ class Customer(AbstractUser):
 
 class Delivery(models.Model):
     # Look at django Address Class, we may be able to get rid of this whole Class
-    delivery_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
-                                   help_text='Unique ID for this specific order-delivery information')
+    delivery_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this specific order')
     street_address = models.CharField(max_length=250, null=False)
     street_address2 = models.CharField(max_length=250, null=True, blank=True, help_text='Apt number, building, etc.')
     # Note that for this project, our store will only be in Omaha, so these fields could be eliminated theoretically
