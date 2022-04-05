@@ -44,8 +44,16 @@ class ProductList(admin.ModelAdmin):
     ordering = ['name', 'product_id']
 
 
+class CouponList(admin.ModelAdmin):
+    list_display = ('coupon_id', 'name', 'totalDiscount')
+    list_filter = ('name', 'totalDiscount')
+    search_fields = ('name', 'coupon_id', 'totalDiscount')
+    ordering = ['name', 'totalDiscount']
+
+
 # register the Service and Product with the django admin page
 #admin.site.register(Customer, CustomerList)
 admin.site.register(Order, OrderList)
 admin.site.register(Product, ProductList)
 admin.site.register(Delivery, DeliveryList)
+admin.site.register(Coupon, CouponList)
