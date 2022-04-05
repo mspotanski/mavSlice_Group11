@@ -11,7 +11,7 @@ from django.db import models
 
 class User(AbstractUser):
     # add additional fields in here
-    delivery_info = customer = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
+    delivery_info = User = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
 
     def __str__(self):
         return self.email
@@ -127,8 +127,8 @@ class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a specific Order')
     # Zero to many relationship from User to Order
     # OneToOne relationship from Order to User
-    # customer = models.OneToOneField('Customer', primary_key=True, on_delete=models.CASCADE)
-    customer = models.ForeignKey('User', on_delete=models.CASCADE)
+    # User = models.OneToOneField('User', primary_key=True, on_delete=models.CASCADE)
+    User = models.ForeignKey('User', on_delete=models.CASCADE)
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
