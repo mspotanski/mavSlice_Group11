@@ -11,6 +11,7 @@ from django.db import models
 
 class User(AbstractUser):
     # add additional fields in here
+    delivery_info = customer = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
 
     def __str__(self):
         return self.email
@@ -20,7 +21,6 @@ class Delivery(models.Model):
     # Look at django Address Class, we may be able to get rid of this whole Class
     delivery_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                                    help_text='Unique ID for this specific order-delivery information')
-    customer = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
     street_address = models.CharField(max_length=250, null=False)
     street_address2 = models.CharField(max_length=250, null=True, blank=True, help_text='Apt number, building, etc.')
     # Note that for this project, our store will only be in Omaha, so these fields could be eliminated theoretically
@@ -128,7 +128,7 @@ class Order(models.Model):
     # Zero to many relationship from User to Order
     # OneToOne relationship from Order to User
     # customer = models.OneToOneField('Customer', primary_key=True, on_delete=models.CASCADE)
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    customer = models.ForeignKey('User', on_delete=models.CASCADE)
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
