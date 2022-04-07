@@ -1,51 +1,58 @@
 {% extends "mavSlice/base.html" %}
+{% load static %}
 
-{% block body %}
-    {% if price_all == 0 %}
-        <h1>You don't have anything in cart</h1>
-    {% else %}
-        <div class="col-12">
-            <table class="table table-sm table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Product name</th>
-                    <th scope="col">Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% if Product %}
-                    {% for product in products %}
-                        <tr>
-                            <td>{{ product }}</td>
-                            <td>{{ product.price }} USD</td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
+{% block title %}
+  Your shopping cart
+{% endblock %}
 
-
-
-
-            </table>
-            <h4 style="text-align:center">Overall price: {{ order_price }} USD</h4>
-            <div class="mt-2 col-md-12"></div>
-            <div class="mt-2 col-md-12"></div>
-
-            <div style="text-align: center;">
-                <a href="{% url "" %}"><input class="btn btn-success btn-lg btn-block" type="button" value="Check Out">
-                </a>
-            </div>
-
-            <div class="mt-2 col-md-12"></div>
-            <div class="mt-2 col-md-12"></div>
-
-            <div style="text-align: center;">
-                <a href="{% url "" %}"><input class="btn-outline-danger btn-sm" type="button" value="Delete order">
-                </a>
-            </div>
-
-
-        </div>
-
-
-    {% endif %}
+{% block content %}
+  <h1>Your Shopping Cart</h1>
+  <table class="cart">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Remove</th>
+        <th>Unit price</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <td>
+              <a href="{{ product.get_absolute_url }}">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% endif %}">
+              </a>
+            </td>
+            <td>{{ product.name }}</td>
+            <td>
+              <form action="{% url "mavSlice:cart_add" product.id %}" method="post">
+                {{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.update }}
+                <input type="submit" value="Update">
+                {% csrf_token %}
+              </form>
+            </td>
+            <td><a href="{% url "mavSlice:cart_remove" product.id %}">Remove</a></td>
+            <td class="num">${{ item.price }}</td>
+            <td class="num">${{ item.total_price }}</td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td>Total</td>
+        <td colspan="4"></td>
+        <td class="num">${{ cart.get_total_price }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-right">
+    <a href="{% url "mavSlice:Menu" %}" class="button light">Continue shopping</a>
+    <a href="{% url "mavSlice:order_create" %}" class="button">
+      Checkout
+    </a>
+  </p>
 {% endblock %}

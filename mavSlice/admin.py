@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import *
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 # Define the admin options for the Customer table
 # Should be able to see name, email, Delivery information, user_id
 
@@ -26,22 +28,36 @@ class DeliveryList(admin.ModelAdmin):
 
 # Define the admin options for the Order table
 # Should be able to display Order ID,
-class OrderList(admin.ModelAdmin):
-    list_display = ('order_id', 'coupon', 'order_price', 'placed_time', 'completed_time')
-    # list_display = ('order_id', 'products', 'customer', 'coupon', 'order_price', 'placed_time', 'completed_time')
-    list_filter = ('order_id',)
-    # list_filter = ('placed_time', 'user', 'order_id')
-    search_fields = ('order_id', 'products', 'coupon', 'placed_time', 'completed_time')
-    ordering = ['placed_time', 'order_id']
+# @admin.register(Order)
+# class OrderList(admin.ModelAdmin):
+#     list_display = ('order_id', 'coupon', 'order_price', 'placed_time', 'completed_time')
+#     # list_display = ('order_id', 'products', 'customer', 'coupon', 'order_price', 'placed_time', 'completed_time')
+#     list_filter = ('order_id', 'placed_time', 'completed_time')
+#     # list_filter = ('placed_time', 'user', 'order_id')
+#     inlines = [OrderItemInline]
+#     search_fields = ('order_id', 'products', 'coupon', 'placed_time', 'completed_time')
+#     ordering = ['placed_time', 'order_id']
+
+
+# class OrderItemInline(admin.TabularInline):
+#     model = OrderItem
+#     raw_id_fields = ['product']
+
+
+# NOT FINISHED
+def order_detail(obj):
+    return mark_safe('<a href="{}">View</a>'.format(
+        reverse('mavSlice:admin_order_detail', args=[obj.id])))
 
 
 # Define the admin options for the Product table
 # Same thing as Menu, but in a List format for admin
 class ProductList(admin.ModelAdmin):
-    list_display = ('product_id', 'name', 'type', 'price')
+    list_display = ('product_id', 'product_slug', 'name', 'type', 'price')
     list_filter = ('type', 'name')
     search_fields = ('name', 'product_id')
     ordering = ['name', 'product_id']
+    prepopulated_fields = {'product_slug': ('name',)}
 
 
 class CouponList(admin.ModelAdmin):
@@ -53,7 +69,7 @@ class CouponList(admin.ModelAdmin):
 
 # register the Service and Product with the django admin page
 #admin.site.register(Customer, CustomerList)
-admin.site.register(Order, OrderList)
+#admin.site.register(Order, OrderList)
 admin.site.register(Product, ProductList)
 admin.site.register(Delivery, DeliveryList)
 admin.site.register(Coupon, CouponList)

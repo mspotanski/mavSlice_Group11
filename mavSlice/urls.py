@@ -17,11 +17,14 @@ Including another URLconf
 from . import views
 from django.urls import path, re_path
 app_name = 'mavSlice'
+
 urlpatterns = [
     path('', views.home, name='home'),
     re_path(r'^home/$', views.home, name='home'),
     path('Menu/', views.Menu, name='Menu'),
-    path('Cart/', views.Cart, name='Cart'),
+    path('Cart/', views.Cart_view, name='Cart'),
+    path('add/<int:product_id>/', views.cart_add, name='cart_add'),
+    path('remove/<int:product_id>/', views.cart_remove, name='cart_remove'),
     path('custom/', views.custom, name='custom'),
     path('Cart/delivery/', views.cart_delivery, name='cart_delivery'),
     path('Cart/delivery/order_confirmation/', views.order_confirmation, name='order_confirmation'),
@@ -29,5 +32,7 @@ urlpatterns = [
     path('user/<int:pk>/summary/', views.user_info, name='user_info'),
     path('user/<int:pk>/summary/delivery/', views.user_info_delivery, name='user_info_delivery'),
     path('user/<int:pk>/summary/payment/', views.user_info_payment, name='user_info_payment'),
+    path('place_order/', views.order_create, name='order_create'),
+    path('admin/order/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
 
 ]

@@ -1,21 +1,10 @@
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, Product, Coupon, Order
+from .models import *
 
 
-# class CustomUserCreationForm(UserCreationForm):
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email')
-#
-#
-# class CustomUserChangeForm(UserChangeForm):
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email')
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
 
 
 class ProductForm(forms.ModelForm):
@@ -25,17 +14,10 @@ class ProductForm(forms.ModelForm):
 
 
 # NOT FINISHED
-# class ToppingsForm(forms.ModelForm):
-#     class Meta:
-#         model = Toppings
-#         fields = ('name',)
-
-
-# NOT FINISHED
 class OrdersForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('order_id', 'products', 'coupon', 'order_price', 'delivery',)
+        fields = ('order_id', 'coupon', 'order_price', 'delivery', 'placed_time', 'completed_time')
 
 
 # NOT FINISHED
@@ -43,3 +25,16 @@ class CouponForm(forms.ModelForm):
     class Meta:
         model = Coupon
         fields = ('coupon_id', 'totalDiscount',)
+
+
+class CartAddProductForm(forms.Form):
+    quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+    update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+
+
+class DeliveryForm(forms.ModelForm):
+    class Meta:
+        model = Delivery
+        fields = ('street_address', 'street_address2', 'city', 'state', 'zipCode')
+
+

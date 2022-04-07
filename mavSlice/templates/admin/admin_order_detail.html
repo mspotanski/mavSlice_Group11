@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" type="text/css" href="{% static "css/stylesheet.css" %}" />
+{% endblock %}
+
+{% block title %}
+  Order {{ order.order_id }} {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<h1>Order {{ order.order_id }}</h1>
+<table>
+  <tr>
+    <th>Created</th>
+    <td>{{ order.completed_time }}</td>
+  </tr>
+  <tr>
+    <th>Customer</th>
+    <td>{{ order.first_name }} {{ order.last_name }}</td>
+  </tr>
+  <tr>
+    <th>E-mail</th>
+    <td><a href="mailto:{{ order.email }}">{{ order.email }}</a></td>
+  </tr>
+  <tr>
+    <th>Delivery Info</th>
+    <td>{{ order.delivery.get_delivery_info }}</td>
+  </tr>
+  <tr>
+    <th>Total amount</th>
+    <td>${{ order.get_total_cost }}</td>
+  </tr>
+  <tr>
+    <th>Status</th>
+    <td>{% if order.is_completed %}Completed{% else %}Still Cooking!{% endif %}</td>
+  </tr>
+</table>
+
+<div class="module">
+  <h2>Items bought</h2>
+  <div class="tabular">
+    <table style="width:100%">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in order.items.all %}
+          <tr class="row{% cycle "1" "2" %}">
+            <td>{{ product.product.name }}</td>
+            <td class="num">${{ product.price }}</td>
+            <td class="num">{{ product.quantity }}</td>
+            <td class="num">${{ product.get_cost }}</td>
+          </tr>
+        {% endfor %}
+        <tr class="total">
+          <td colspan="3">Total</td>
+          <td class="num">${{ order.get_total_cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+</html>

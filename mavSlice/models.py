@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 import decimal
 from django.contrib.auth.models import User, AbstractUser
-
+from django.urls import reverse
 # accounts/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -18,21 +18,34 @@ from django.db import models
 #     def __str__(self):
 #         return self.email
 
+DELIVERY_CITIES = [('OMA', 'Omaha'), ('BNGTN', 'Bennington'), ('PAP', 'Papillion'), ('GTNA', 'Gretna'),
+                   ('ELK', 'Elkhorn'), ('BEN', 'Benson'), ('RAL', 'Ralston'), ('CB', 'Council Bluffs')]
+
+DELIVERY_STATES = [('NE', 'Nebraska'), ('IA', 'Iowa')]
+
 
 class Delivery(models.Model):
     # Look at django Address Class, we may be able to get rid of this whole Class
     delivery_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this specific order')
     street_address = models.CharField(max_length=250, null=False)
-    street_address2 = models.CharField(max_length=250, null=True, blank=True, help_text='Apt number, building, etc.')
+    street_address2 = models.CharField(max_length=250, null=True, blank=True, default='NA',
+                                       help_text='Apt number, building, etc.')
     # Note that for this project, our store will only be in Omaha, so these fields could be eliminated theoretically
-    city = models.CharField(max_length=30, null=False)
-    state = models.CharField(max_length=30, null=False)
+    city = models.CharField(max_length=30, null=False, choices=DELIVERY_CITIES)
+    state = models.CharField(max_length=30, null=False, choices=DELIVERY_STATES, default='NE')
     zipCode = models.CharField(max_length=5, null=False)
+
+    def get_delivery_info(self):
+        return [self.street_address, self.street_address2, self.city, self.state, self.zipCode]
+
+    def __str__(self):
+        return '{} () {}, {} {}'.format(self.street_address, self.street_address2, self.city, self.state, self.zipCode)
 
 
 # NOT FINISHED
 class Payment(models.Model):
     # Look at django Address Class, they have a whole form for payment information
+    # Look at Brain Tree for implementation
     pay_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                               help_text='Unique ID for User Billing Info')
 
@@ -87,6 +100,12 @@ class Product(models.Model):
     coupon = models.ManyToManyField('Coupon', blank=True)
     # sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
     price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=6, decimal_places=2)
+    image = models.ImageField(upload_to='mavSlice/static/images', blank=True)
+    product_slug = models.SlugField(max_length=100, db_index=True)
+
+    class Meta:
+        ordering = ('product_id',)
+        index_together = (('product_id', 'product_slug'),)
 
     def get_price(self):
         return self.price
@@ -101,27 +120,8 @@ class Product(models.Model):
     def __str__(self):
         return self.description
 
-    # Finds and determines the price of a product based on the product type and number of toppings
-    # NOT FINISHED
-    # Need to determine proper way to get the number of toppings from the product
-    # def determine_product_price(self):
-    #     if self.type == 'Slice':
-    #         total = round(3 + (0.30 * len(self.toppings)), 2)
-    #     else:  # self.type == 'Whole Pie'
-    #         total = round(14 + (0.65 * len(self.toppings)), 2)
-    #     return total
-
-
-# class Toppings(models.Model):
-#     # PRODUCT_TOPPINGS shows all possible toppings for a pizza
-#     # Each added topping adds 0.30 to slice or 0.65 to whole pizza
-#     # None indicates a pizza with only Cheese
-#     # If blank, then default goes to 'None'
-#     PRODUCT_TOPPINGS = (('TOP_PEPP', 'Pepperoni'), ('TOP_BF', 'Beef'), ('TOP_SAUS', 'Italian Sausage'),
-#                         ('TOP_CA_BAC', 'Canadian Bacon'), ('TOP_BAC', 'Bacon'), ('TOP_CHKN', 'Chicken'),
-#                         ('TOP_GRN_PEP', 'Green Pepper'), ('TOP_JAL', 'Jalapeno'), ('TOP_ONION', 'Onion'),
-#                         ('TOP_BAN_PEP', 'Banana Pepper'), ('TOP_BLK_OLV', 'Black Olive'), ('TOP_NONE', 'None'))
-#     name = models.CharField(max_length=15, choices=PRODUCT_TOPPINGS, null=False, blank=True, default='None')
+    def get_absolute_irl(self):
+        return reverse('mavSlice:product_detail', args=[self.product_id, self.product_slug])
 
 
 class Order(models.Model):
@@ -133,15 +133,36 @@ class Order(models.Model):
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
-    products = models.ManyToManyField('Product', blank=False)
     order_price = models.DecimalField(blank=False, default=0.00, max_digits=4, decimal_places=2)
     placed_time = models.DateTimeField(default=timezone.now)
     completed_time = models.DateTimeField(default=timezone.now)
-    # NOT Finished
-    # Need to determine how to grab the price for each individual product
+    braintree_id = models.CharField(max_length=150, blank=True)
+    is_completed = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('-placed_time',)
+
+    def __str__(self):
+        return 'Order {}'.format(self.id)
+
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.items.all())
     # def determine_order_price(self):
     #     total = 0
     #     for product in Product.objects.filter():
     #         total += product.get_price()
     #     return total
+
+
+# Resolves Many-to-Many relationship between Order and Product
+class OrderProduct(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return '{}'.format(self.id)
+
+    def get_cost(self):
+        return self.price * self.quantity
