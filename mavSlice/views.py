@@ -76,6 +76,26 @@ def product_detail(request, id):
     return render(request, 'mavSlice/product_detail.html',
                   {'product': product, 'cart_product_form': cart_product_form})
 
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            # load the profile instance created by the signal
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+
+            # login user after signing up
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+
+            # redirect user to home page
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
 
 # def calculate_cart_price(username):
 # price_all = 0
@@ -147,3 +167,5 @@ def user_info_delivery(request):
 @login_required
 def user_info_payment(request):
     pass
+
+

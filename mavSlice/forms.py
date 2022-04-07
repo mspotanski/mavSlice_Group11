@@ -38,3 +38,10 @@ class DeliveryForm(forms.ModelForm):
         fields = ('street_address', 'street_address2', 'city', 'state', 'zipCode')
 
 
+# Not finsihed, payment info?,
+class signupForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('email',
+ #                 'FName', 'LName', 'address', 'State', 'City', 'Zip',
+                  'password1', 'password2',)
