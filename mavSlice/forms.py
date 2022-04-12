@@ -12,6 +12,24 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ('name', 'description', 'price')
 
+class Registration(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+class Meta:
+    model = User
+    fields = ('username', 'fname', 'lname', 'email', 'password1', 'password2', )
+
+def save(self, commit=True):
+    user = super(Registration, self).save(commit=False)
+    user.fname = self.cleaned_data['fname']
+    user.lname = self.cleaned_data['lname']
+    user.email = self.cleaned_data['email']
+
+    if commit:
+        user.save()
+
+    return User
+
 
 # NOT FINISHED
 class OrdersForm(forms.ModelForm):
@@ -45,3 +63,4 @@ class signupForm(UserCreationForm):
         fields = ('email',
  #                 'FName', 'LName', 'address', 'State', 'City', 'Zip',
                   'password1', 'password2',)
+
