@@ -11,6 +11,8 @@ from .cart import *
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseNotFound
 
+def Menu(request):
+    return render(request, 'Menu.html')
 
 def home(request):
     return render(request, 'mavSlice/home.html',

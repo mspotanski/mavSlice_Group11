@@ -16,6 +16,8 @@ Including another URLconf
 # from django.conf.urls import url
 from . import views
 from django.urls import path, re_path
+
+
 app_name = 'mavSlice'
 
 urlpatterns = [
@@ -35,5 +37,6 @@ urlpatterns = [
     path('user/<int:pk>/summary/payment/', views.user_info_payment, name='user_info_payment'),
     path('place_order/', views.order_create, name='order_create'),
     path('admin/order/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
+
 
 ]

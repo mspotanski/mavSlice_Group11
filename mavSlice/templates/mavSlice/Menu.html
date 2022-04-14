@@ -2,21 +2,23 @@
 <html lang="en">
 {% extends 'mavSlice/base.html' %}
 {% block content %}
+{% load static %}
+
+
+
+
 
 <div>
      <nav class="navbar navbar-expand-sm bg-light navbar-light justify-context-center" id="Deals">
           <ul class="nav navbar-nav mm-auto">
             <li class="nav-title">
-                <b>Deals</b>
+               <b>Deals</b>
             </li>
           </ul>
      </nav>
 </div>
 
-
-<div>
-Menu
-</div>
+<h1 class = "Menu">Menu</h1>
 
     <div class="content container">
         <!-- Example row of columns using cards for alignment
@@ -25,10 +27,11 @@ Menu
         <div class="row">
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
-
+                    <img src="{% static "css/images/Pepperoni_pizza.jpeg" %}" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Pepperoni za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Pepperoni Pizza</h5>
+
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -37,10 +40,10 @@ Menu
 
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
-
+                    <img src="{% static "css/images/supreme.jpeg" %}" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Supreme za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Supreme Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                             role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -48,10 +51,10 @@ Menu
             </div>
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
-
+                     <img src="{% static "css/images/cheese.jpeg" %}" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Cheese za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Cheese Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -62,10 +65,10 @@ Menu
         <div class="row">
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
-
+                    <img src="{% static "css/images/veggie.jpeg" %}" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Pepperoni za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Veggie Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -74,10 +77,11 @@ Menu
 
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
+                    <img src="{% static "css/images/margerita.jpeg" %}" class="card-img-top">
 
                     <div class="card-body">
-                        <h5 class="card-title">Supreme za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Margherita Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -85,10 +89,11 @@ Menu
             </div>
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
+                    <img src="{% static "css/images/bbq.jpeg" %}" class="card-img-top">
 
                     <div class="card-body">
-                        <h5 class="card-title">Cheese za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">BBQ Chicken Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -99,10 +104,11 @@ Menu
         <div class="row">
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
+                    <img src="{% static "css/images/hawaii.jpeg" %}" class="card-img-top">
 
                     <div class="card-body">
-                        <h5 class="card-title">Pepperoni za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Hawaiian Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -111,10 +117,11 @@ Menu
 
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
+                    <img src="{% static "css/images/buffalo.jpeg" %}" class="card-img-top">
 
                     <div class="card-body">
-                        <h5 class="card-title">Supreme za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Buffalo Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
@@ -122,10 +129,11 @@ Menu
             </div>
            <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card">
+                    <img src="{% static "css/images/macaroni.jpeg" %}" class="card-img-top">
 
                     <div class="card-body">
-                        <h5 class="card-title">Cheese za</h5>
-                        <p class="card-text">add image here</p>
+                        <h5 class="card-title">Macaroni And Cheese Pizza</h5>
+
                         <p><a class="btn btn-primary" href="{% url 'mavSlice:Cart' %}"
                               role="button">Add to cart &raquo;</a></p>
                     </div>
