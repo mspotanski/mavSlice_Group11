@@ -2,13 +2,59 @@
 <html lang="en">
 {% extends 'mavSlice/base.html' %}
 {% block content %}
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
 </head>
 <body>
-This is the home page
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <h2 class="top-menu">Welcome to mavSlice {{ user.username }},</h2>
+
+        </div>
+    {% else %}
+        <p>Welcome to mavSlice Guest.</p>
+    {% endif %}
+
+
+
+                <div class="container1">
+                    <img src="{% static "images/pizza.jpeg" %}" alt="pizza">
+                    <a href="{% url 'mavSlice:Menu' %}">
+                        <button class="btn1">Order Now !!</button>
+                    </a>
+
+                </div>
+
+                <div class="container2">
+                    <img src="{% static "images/pizza1.jpeg" %}">
+                    <a href="{% url 'mavSlice:Menu' %}">
+                        <button class="btn2">Order Now !!</button>
+                    </a>
+
+                </div>
+
+            <br>
+            <br>
+            <div class="container3">
+                <h3>About US</h3>
+                <p>mavSlice is a local pizza restaurant available on the campus. We love being the part of the campus and appreciate all our loyal customers. We use fresh ingredients to make our pizzas.</p>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 {% endblock %}
