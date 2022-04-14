@@ -77,25 +77,48 @@ def product_detail(request, id):
                   {'product': product, 'cart_product_form': cart_product_form})
 
 def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()
-            # load the profile instance created by the signal
-            user.save()
-            raw_password = form.cleaned_data.get('password1')
-
-            # login user after signing up
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-
-            # redirect user to home page
-            return redirect('home')
+    if not request.user.is_authenticated:
+        if request.method == "POST":
+            form = Registration(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data["username"]
+                password = form.cleaned_data["password1"]
+                user = authenticate(username=username, password=password)
+                login(request, user)
+                return redirect("mavSlice:home")
+        else:
+            form = Registration()
+        context = {"form": form}
+        return render(request, 'registration/signup.html', context)
     else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        return redirect("mavSlice:home")
 
+def login_view(request):
+    if not request.user.is_authenticated:
+        if request.method == "POST":
+            form = AuthenticationForm(data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data["username"]
+                password = form.cleaned_data["password"]
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    if next is not None:
+                        return redirect("mavSlice:home")
+                    else:
+                        return redirect("mavSlice:home")
+        else:
+            form = AuthenticationForm()
+        context = {"form": form}
+        return render(request, 'registration/login.html', context)
+    else:
+        return redirect("mavSlice:home")
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect("mavSlice:home")
 
 # def calculate_cart_price(username):
 # price_all = 0

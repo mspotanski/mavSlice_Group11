@@ -16,7 +16,9 @@ from django.db import models
 #     delivery_info = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
 #
 #     def __str__(self):
-#         return self.email
+#          return self.email
+
+
 
 DELIVERY_CITIES = [('OMA', 'Omaha'), ('BNGTN', 'Bennington'), ('PAP', 'Papillion'), ('GTNA', 'Gretna'),
                    ('ELK', 'Elkhorn'), ('BEN', 'Benson'), ('RAL', 'Ralston'), ('CB', 'Council Bluffs')]
@@ -128,7 +130,7 @@ class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a specific Order')
     # Zero to many relationship from User to Order
     # OneToOne relationship from Order to User
-    #customer = models.OneToOneField('Customer', on_delete=models.CASCADE, help_text='User who placed order')
+    #Customer = models.OneToOneField('Customer', on_delete=models.CASCADE, help_text='User who placed order')
     # User = models.ForeignKey('User', on_delete=models.CASCADE)
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
