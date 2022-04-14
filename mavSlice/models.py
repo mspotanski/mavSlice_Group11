@@ -94,13 +94,11 @@ class Product(models.Model):
     product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a Product')
     type = models.CharField(max_length=10, choices=PRODUCT_TYPES, blank=False, default='Whole Pie')
     name = models.CharField(max_length=20, choices=PRODUCT_PIZZAS, blank=False, default='Cheese')
-    description = models.CharField(max_length=1000, blank=True)
     has_toppings = models.BooleanField
-    has_extra_cheese = models.BooleanField
-    has_extra_toppings = models.BooleanField
     has_sauce = models.BooleanField
+    description = models.CharField(max_length=1000, blank=True)
     coupon = models.ManyToManyField('Coupon', blank=True)
-    # sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
+    sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
     price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=6, decimal_places=2)
     image = models.ImageField(upload_to='mavSlice/static/images', blank=True)
     product_slug = models.SlugField(max_length=100, db_index=True)
@@ -120,10 +118,23 @@ class Product(models.Model):
             self.price = value
 
     def __str__(self):
-        return self.description
+        return self.name
 
     def get_absolute_irl(self):
         return reverse('mavSlice:product_detail', args=[self.product_id, self.product_slug])
+
+
+# Subtype of Product
+# Should inherit all variables and methods of Product
+# Purpose is to make it easier to store and determine prices of custom pizzas
+class customProduct(Product):
+    has_extra_cheese = models.BooleanField
+    has_extra_toppings = models.BooleanField
+
+    def __str__(self):
+        return 'Sauce: {sauce}\nToppings: {tops}\t\tExtra Toppings:{extra_top}\nExtra Cheese: {is_cheese}\n'.format(
+            sauce=self.sauce, tops=self.description, extra_top=self.has_extra_toppings, is_cheese=self.has_extra_cheese)
+
 
 
 class Order(models.Model):
@@ -168,3 +179,4 @@ class OrderProduct(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+

@@ -1,4 +1,3 @@
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import *
@@ -12,12 +11,15 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ('name', 'description', 'price')
 
+
 class Registration(UserCreationForm):
     email = forms.EmailField(required=True)
+
 
 class Meta:
     model = User
     fields = ('username', 'fname', 'lname', 'email', 'password1', 'password2', )
+
 
 def save(self, commit=True):
     user = super(Registration, self).save(commit=False)
@@ -56,7 +58,7 @@ class DeliveryForm(forms.ModelForm):
         fields = ('street_address', 'street_address2', 'city', 'state', 'zipCode')
 
 
-# Not finsihed, payment info?,
+# Not finished, payment info?,
 class signupForm(UserCreationForm):
     class Meta:
         model = User

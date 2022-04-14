@@ -11,8 +11,10 @@ from .cart import *
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseNotFound
 
+
 def Menu(request):
-    return render(request, 'Menu.html')
+    return render(request, 'mavSlice/Menu.html')
+
 
 def home(request):
     return render(request, 'mavSlice/home.html',
@@ -78,6 +80,12 @@ def product_detail(request, id):
     return render(request, 'mavSlice/product_detail.html',
                   {'product': product, 'cart_product_form': cart_product_form})
 
+
+def product_list(request):
+    products = Product.objects
+    print(str(products))
+
+
 def signup(request):
     if not request.user.is_authenticated:
         if request.method == "POST":
@@ -95,6 +103,7 @@ def signup(request):
         return render(request, 'registration/signup.html', context)
     else:
         return redirect("mavSlice:home")
+
 
 def login_view(request):
     if not request.user.is_authenticated:
@@ -117,6 +126,7 @@ def login_view(request):
     else:
         return redirect("mavSlice:home")
 
+
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
@@ -127,6 +137,7 @@ def logout_view(request):
 # for obj in Product.objects.filter(add_by=username).filter(already_ordered=False):
 # price_all += obj.price
 # return price_all
+
 
 # Order Functionality
 def order_create(request):
