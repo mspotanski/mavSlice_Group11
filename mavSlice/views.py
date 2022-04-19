@@ -1,15 +1,13 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import *
-from .forms import *
-from .cart import *
 
-from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponseNotFound
+from .cart import *
+from .forms import *
 
 
 def Menu(request):
