@@ -80,9 +80,9 @@ class Product(models.Model):
     PRODUCT_TYPES = ((TYPE_SLICE, 'Slice'), (TYPE_WHOLE_PIE, 'Whole Pie'))
     # PRODUCT_PIZZA_NAMES shows all possible flavors of Pizza as well as their number of toppings
     PRODUCT_PIZZAS = (('CHS', 'Cheese'), ('PEPP', 'Pepperoni'), ('BF', 'Beef'),
-                      ('ITL_SAUS', 'Italian Sausage'), ('CA_BAC', 'Canadian Bacon'),
-                      ('CHKN_ALF', 'Chicken Alfredo'), ('SPRM', 'Supreme'), ('MT_LOVE', 'Meat Lovers'),
-                      ('PHIL', 'Philly'), ('BBQ_CHKN', 'BBQ Chicken'))
+                      ('MAC', 'Macaroni and Cheese'), ('VG', 'Veggie'),
+                      ('BFF', 'Buffalo '), ('SPRM', 'Supreme'), ('MRG', 'Margherita'),
+                      ('HWI', 'Hawaiian'), ('BBQ_CHKN', 'BBQ Chicken'))
 
     # PRODUCT_SAUCES is a list of all possible sauces for a pizza
     # Sauce does NOT affect price
