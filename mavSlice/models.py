@@ -9,14 +9,20 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-# class Customer(AbstractUser):
-#     # add additional fields in here
-#     cust_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
-#                                help_text='Unique ID for this specific order-delivery information')
-#     delivery_info = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
-#
-#     def __str__(self):
-#          return self.email
+class customer(User):
+    # add additional fields in here
+    # cust_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
+    #                            help_text='Unique ID for this specific order-delivery information')
+    delivery_info = models.ForeignKey('Delivery', on_delete=models.RESTRICT, null=True)
+    cust_fname = models.CharField(max_length=250, null=False)
+    cust_lname = models.CharField(max_length=250, null=False)
+    cust_email = models.CharField(max_length=250, null=False)
+    cust_password = models.CharField(max_length=250, null=False)
+
+
+
+    def __str__(self):
+         return self.email
 
 
 
@@ -141,7 +147,7 @@ class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a specific Order')
     # Zero to many relationship from User to Order
     # OneToOne relationship from Order to User
-    #Customer = models.OneToOneField('Customer', on_delete=models.CASCADE, help_text='User who placed order')
+    #customer = models.OneToOneField('customer', on_delete=models.CASCADE, help_text='User who placed order')
     # User = models.ForeignKey('User', on_delete=models.CASCADE)
     payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
@@ -173,6 +179,7 @@ class OrderProduct(models.Model):
     product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+
 
     def __str__(self):
         return '{}'.format(self.id)

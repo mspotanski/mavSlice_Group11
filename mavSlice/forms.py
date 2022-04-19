@@ -22,13 +22,13 @@ class Meta:
 
 
 def save(self, commit=True):
-    user = super(Registration, self).save(commit=False)
-    user.fname = self.cleaned_data['fname']
-    user.lname = self.cleaned_data['lname']
-    user.email = self.cleaned_data['email']
+    User = super(Registration, self).save(commit=False)
+    User.fname = self.cleaned_data['fname']
+    User.lname = self.cleaned_data['lname']
+    User.email = self.cleaned_data['email']
 
     if commit:
-        user.save()
+        User.save()
 
     return User
 
