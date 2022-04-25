@@ -4,142 +4,23 @@
 {% block content %}
 {% load static %}
 
-
-
-
-
-<div>
-     <nav class="navbar navbar-expand-sm bg-light navbar-light justify-context-center" id="Deals">
-          <ul class="nav navbar-nav mm-auto">
-            <li class="nav-title">
-               <b>Deals</b>
-            </li>
-          </ul>
-     </nav>
-</div>
-
-<h1 class = "Menu">Menu</h1>
-
-    <div class="content container">
-        <!-- Example row of columns using cards for alignment
-             The value of 'col-md-x' for all columns in the row must add up to 12
-             This page has 3 columns, each column uses col-md-4, for a total of 12 -->
-        <div class="row">
-            <div class="col-md-4 d-flex align-items-stretch">
+<h1>MavSlice Whole Pizzas</h1>
+    <div class="row">
+        <div class="col-md-4 d-flex align-items-stretch">
+            {% for product in products %}
                 <div class="card">
-                    <img src="{% static "css/images/Pepperoni_pizza.jpeg" %}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Pepperoni Pizza</h5>
-
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}
+                                  {% static "css/images/supreme.jpeg" %}{% endif %}" class="card-img-top">
+                                        <div class="card-body">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <h5 class="card-type">{{ product.type }}</h5>
+                                        <p><a class="btn btn-primary" href=
+                                                "{% url 'mavSlice:product_detail' product.product_id %}"
+                                                    role="button">Add to cart &raquo;</a></p>
+                                    </div>
                 </div>
+            {% endfor %}
             </div>
-
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/supreme.jpeg" %}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Supreme Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                            role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                     <img src="{% static "css/images/cheese.jpeg" %}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Cheese Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/veggie.jpeg" %}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Veggie Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/margerita.jpeg" %}" class="card-img-top">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Margherita Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/bbq.jpeg" %}" class="card-img-top">
-
-                    <div class="card-body">
-                        <h5 class="card-title">BBQ Chicken Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/hawaii.jpeg" %}" class="card-img-top">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Hawaiian Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/buffalo.jpeg" %}" class="card-img-top">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Buffalo Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-           <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="{% static "css/images/macaroni.jpeg" %}" class="card-img-top">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Macaroni And Cheese Pizza</h5>
-
-                        <p><a class="btn btn-primary" href="{% url 'mavSlice:product_detail' product_id %}"
-                              role="button">Add to cart &raquo;</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}
 </html>

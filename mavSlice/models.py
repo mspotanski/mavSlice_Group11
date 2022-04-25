@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 import decimal
+import braintree
 from django.contrib.auth.models import User, AbstractUser
 from django.urls import reverse
 # accounts/models.py
@@ -25,9 +26,8 @@ class customer(User):
          return self.email
 
 
-
-DELIVERY_CITIES = [('OMA', 'Omaha'), ('BNGTN', 'Bennington'), ('PAP', 'Papillion'), ('GTNA', 'Gretna'),
-                   ('ELK', 'Elkhorn'), ('BEN', 'Benson'), ('RAL', 'Ralston'), ('CB', 'Council Bluffs')]
+# DELIVERY_CITIES = [('OMA', 'Omaha'), ('BNGTN', 'Bennington'), ('PAP', 'Papillion'), ('GTNA', 'Gretna'),
+#                    ('ELK', 'Elkhorn'), ('BEN', 'Benson'), ('RAL', 'Ralston'), ('CB', 'Council Bluffs')]
 
 DELIVERY_STATES = [('NE', 'Nebraska'), ('IA', 'Iowa')]
 
@@ -39,7 +39,7 @@ class Delivery(models.Model):
     street_address2 = models.CharField(max_length=250, null=True, blank=True, default='NA',
                                        help_text='Apt number, building, etc.')
     # Note that for this project, our store will only be in Omaha, so these fields could be eliminated theoretically
-    city = models.CharField(max_length=30, null=False, choices=DELIVERY_CITIES)
+    city = models.CharField(max_length=30, null=False)
     state = models.CharField(max_length=30, null=False, choices=DELIVERY_STATES, default='NE')
     zipCode = models.CharField(max_length=5, null=False)
 
@@ -51,11 +51,11 @@ class Delivery(models.Model):
 
 
 # NOT FINISHED
-class Payment(models.Model):
-    # Look at django Address Class, they have a whole form for payment information
-    # Look at Brain Tree for implementation
-    pay_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
-                              help_text='Unique ID for User Billing Info')
+# class Payment(models.Model):
+#     # Look at django Address Class, they have a whole form for payment information
+#     # Look at Brain Tree for implementation
+#     pay_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
+#                               help_text='Unique ID for User Billing Info')
 
 
 class Coupon(models.Model):
@@ -142,14 +142,13 @@ class customProduct(Product):
             sauce=self.sauce, tops=self.description, extra_top=self.has_extra_toppings, is_cheese=self.has_extra_cheese)
 
 
-
 class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for a specific Order')
     # Zero to many relationship from User to Order
     # OneToOne relationship from Order to User
     #customer = models.OneToOneField('customer', on_delete=models.CASCADE, help_text='User who placed order')
     # User = models.ForeignKey('User', on_delete=models.CASCADE)
-    payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
+    #payment = models.ForeignKey('Payment', on_delete=models.CASCADE)
     delivery = models.ForeignKey('Delivery', on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', null=True, on_delete=models.CASCADE)
     order_price = models.DecimalField(blank=False, default=0.00, max_digits=4, decimal_places=2)
@@ -186,4 +185,3 @@ class OrderProduct(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
-

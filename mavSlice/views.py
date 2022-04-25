@@ -1,27 +1,30 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import redirect
-from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
-
+from .models import *
+from .forms import *
 from .cart import *
+from io import BytesIO
 from .forms import *
 
 
+# Menu Functionality
 def Menu(request):
-    return render(request, 'mavSlice/Menu.html')
+    products = Product.objects.all()
+    print(products.values())
+    return render(request, 'mavSlice/Menu.html', {'products': products})
+
+
+def get_products():
+    return Product.objects.filter(created_date__lte=timezone.now())
 
 
 def home(request):
     return render(request, 'mavSlice/home.html',
                   {'Home': home})
-
-
-def Menu(request):
-    return render(request, 'mavSlice/Menu.html',
-                  {'Menu': Menu})
 
 
 def custom(request):
@@ -55,7 +58,7 @@ def cart_add(request, product_id):
         cart.add(product=product,
                  quantity=cd['quantity'],
                  update_quantity=cd['update'])
-    return redirect('mavSlice/Cart.html')
+    return redirect('mavSlice:Cart.html')
 
 
 def cart_remove(request, product_id):
@@ -72,8 +75,8 @@ def cart_detail(request):
     return render(request, 'mavSlice/Cart.html', {'cart': cart})
 
 
-def product_detail(request, id):
-    product = get_object_or_404(Product, id=id, available=True)
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product, id=id, slug=slug, available=True)
     cart_product_form = CartAddProductForm()
     return render(request, 'mavSlice/product_detail.html',
                   {'product': product, 'cart_product_form': cart_product_form})
@@ -157,7 +160,7 @@ def order_create(request):
     else:
         form = OrdersForm()
     return render(request,
-                  'mavSlice/Cart.html',
+                  'mavSlice/checkout.html',
                   {'cart': cart, 'form': form})
 
 
@@ -183,23 +186,48 @@ def checkout(request):
                   {'Checkout': checkout})
 
 
+# Payment Processing
 @login_required
 def order_confirmation(request):
     pass
 
 
-@login_required
-def user_info(request):
-    pass
+def payment_process(request):
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+
+    if request.method == 'POST':
+        # retrieve nonce
+        nonce = request.POST.get('payment_method_nonce', None)
+        # create and submit transaction
+        result = braintree.Transaction.sale({
+            'amount': '{:.2f}'.format(order.get_total_cost()),
+            'payment_method_nonce': nonce,
+            'options': {
+                'submit_for_settlement': True
+            }
+        })
+        if result.is_success:
+            # mark the order as paid
+            order.paid = True
+            # store the unique transaction id
+            order.braintree_id = result.transaction.id
+            order.save()
+            return redirect('payment:done')
+        else:
+            return redirect('payment:canceled')
+    else:
+        # generate token
+        client_token = braintree.ClientToken.generate()
+        return render(request,
+                      'payment/process_payment.html',
+                      {'order': order,
+                       'client_token': client_token})
 
 
-@login_required
-def user_info_delivery(request):
-    pass
+def payment_completed(request):
+    return render(request, 'payment/payment_complete.html')
 
 
-@login_required
-def user_info_payment(request):
-    pass
-
-
+def payment_canceled(request):
+    return render(request, 'payment/payment_cancelled.html')

@@ -39,15 +39,21 @@ class DeliveryList(admin.ModelAdmin):
 #     ordering = ['placed_time', 'order_id']
 
 
-# class OrderItemInline(admin.TabularInline):
-#     model = OrderItem
-#     raw_id_fields = ['product']
+class OrderItemInline(admin.TabularInline):
+    model = OrderProduct
+    raw_id_fields = ['product']
 
 
-# NOT FINISHED
 def order_detail(obj):
     return mark_safe('<a href="{}">View</a>'.format(
         reverse('mavSlice:admin_order_detail', args=[obj.id])))
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['order_id', 'order_price', 'placed_time', 'coupon', 'delivery', order_detail]
+    list_filter = ['order_price', 'placed_time', 'coupon']
+    inlines = [OrderItemInline]
 
 
 # Define the admin options for the Product table

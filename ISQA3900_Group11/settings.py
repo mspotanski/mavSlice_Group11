@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from braintree import Configuration, Environment
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -132,13 +132,24 @@ MEDIA_URL = '/images/'
 #]
 
 
-
 CART_SESSION_ID = 'cart'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Braintree settings - replace with your credentials after signing up for braintree account
+BRAINTREE_MERCHANT_ID = 'dvf59z5dpzw53vv2'  # Merchant ID
+BRAINTREE_PUBLIC_KEY = 'crzkgk67rqmg9fv6'   # Public Key
+BRAINTREE_PRIVATE_KEY = '8a240525c4da4e06d18b3092671012a3'  # Private key
+
+
+Configuration.configure(
+    Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

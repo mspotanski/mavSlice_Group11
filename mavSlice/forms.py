@@ -37,7 +37,7 @@ def save(self, commit=True):
 class OrdersForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('order_id', 'coupon', 'order_price', 'delivery', 'placed_time', 'completed_time')
+        fields = ('coupon', 'order_price', 'delivery', 'placed_time')
 
 
 # NOT FINISHED
