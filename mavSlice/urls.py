@@ -16,7 +16,8 @@ Including another URLconf
 # from django.conf.urls import url
 from . import views
 from django.urls import path, re_path
-
+#from django.conf.urls import url
+#from mysite.core import views as core_views
 
 app_name = 'mavSlice'
 
@@ -41,5 +42,9 @@ urlpatterns = [
     path('process/', views.payment_process, name='process'),
     path('complete/', views.payment_completed, name='complete_payment'),
     path('canceled/', views.payment_canceled, name='payment_canceled'),
+    path('create/', views.order_create, name='order_create'),
+    path('admin/order/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
+    path('admin/order/<int:order_id>/pdf/', views.admin_order_pdf, name='admin_order_pdf'),
+
 
 ]
