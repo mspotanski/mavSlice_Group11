@@ -30,17 +30,16 @@ class ProductForm(forms.ModelForm):
 #         fields = ('cust_fname', 'cust_lname', 'cust_password', 'delivery_info','payment_info')
 
 
-def save(self, commit=True):
+#def save(self, commit=True):
 #     customer = super(Registration, self).save(commit=False)
 #     customer.fname = self.cleaned_data['fname']
 #     customer.lname = self.cleaned_data['lname']
 #     #customer.email = self.cleaned_data['email']
 #
-     if commit:
-         User.save()
-#         customer.save()
-#
-     return customer
+#    if commit:
+#        User.save()
+#        customer.save()
+#        return customer
 
 
 # NOT FINISHED
