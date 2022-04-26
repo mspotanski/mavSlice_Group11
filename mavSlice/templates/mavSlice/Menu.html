@@ -14,10 +14,9 @@
                                         <div class="card-body">
                                         <h5 class="card-title">{{ product.name }}</h5>
                                         <h5 class="card-type">{{ product.type }}</h5>
-                                        <p><a class="btn btn-primary" href=
-                                                "{% url 'mavSlice:product_detail' product.product_id %}"
+                                        <p><a class="btn btn-primary" href="{{ product.get_absolute_url }}"
                                                     role="button">Add to cart &raquo;</a></p>
-                                    </div>
+                                        </div>
                 </div>
             {% endfor %}
             </div>

@@ -9,11 +9,11 @@
 
 {% block content %}
   <div class="product-detail">
-    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static '' %}{% endif %}">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}{{'static/images/No_image_available.png'}}{% endif %}">
     <h1>{{ product.name }}</h1>
     <h2><a href="{{ product.get_absolute_url }}">}</a></h2>
     <p class="price">${{ product.get_price }}</p>
-    <form action="{% url "mavSlice:cart_add" product.id %}" method="post">
+    <form action="{% url "mavSlice:cart_add" product.product_id %}" method="post">
       {{ cart_product_form }}
       {% csrf_token %}
       <input type="submit" value="Add to cart">

@@ -29,14 +29,14 @@
             </td>
             <td>{{ product.name }}</td>
             <td>
-              <form action="{% url "mavSlice:cart_add" product.id %}" method="post">
+              <form action="{% url "mavSlice:cart_add" product.product_id %}" method="post">
                 {{ item.update_quantity_form.quantity }}
                 {{ item.update_quantity_form.update }}
                 <input type="submit" value="Update">
                 {% csrf_token %}
               </form>
             </td>
-            <td><a href="{% url "mavSlice:cart_remove" product.id %}">Remove</a></td>
+            <td><a href="{% url "mavSlice:cart_remove" product.product_id %}">Remove</a></td>
             <td class="num">${{ item.price }}</td>
             <td class="num">${{ item.total_price }}</td>
           </tr>

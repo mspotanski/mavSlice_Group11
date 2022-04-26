@@ -147,7 +147,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_irl(self):
+    def get_absolute_url(self):
         return reverse('mavSlice:product_detail', args=[self.product_id, self.product_slug])
 
 
