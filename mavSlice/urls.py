@@ -31,8 +31,7 @@ urlpatterns = [
     path('remove/<str:product_id>/', views.cart_remove, name='cart_remove'),
     path('custom/', views.custom, name='custom'),
     path('signup/', views.signup, name='signup'),
-    path('Cart/delivery/', views.cart_delivery, name='cart_delivery'),
-    path('Cart/delivery/order_confirmation/', views.order_confirmation, name='order_confirmation'),
+    path('Cart/order_confirmation/', views.payment_completed, name='order_confirmation'),
     path('checkout/', views.checkout, name='checkout'),
     #path('user/<int:pk>/summary/', views.user_info, name='user_info'),
     #path('user/<int:pk>/summary/delivery/', views.user_info_delivery, name='user_info_delivery'),
@@ -44,8 +43,8 @@ urlpatterns = [
     path('complete/', views.payment_completed, name='complete_payment'),
     path('canceled/', views.payment_canceled, name='payment_canceled'),
     path('create/', views.order_create, name='order_create'),
-    path('admin/order/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
-    path('admin/order/<int:order_id>/pdf/', views.admin_order_pdf, name='admin_order_pdf'),
+    path('admin/order/<str:order_id>/', views.admin_order_detail, name='admin_order_detail'),
+    path('admin/order/<str:order_id>/pdf/', views.admin_order_pdf, name='admin_order_pdf'),
 
 
 ]

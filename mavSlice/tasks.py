@@ -16,7 +16,6 @@ def order_created(order_id):
     return mail_sent
 
 
-
 @task
 # Sends newly registered user list of coupon codes to use at checkout
 # NOT DONE: LEAVE FOR SPRINT 3

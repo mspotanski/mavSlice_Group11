@@ -11,9 +11,22 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-#from shop.models import Product
 
 
+'''
+Dealing with no UUID serialization support in json
+'''
+from json import JSONEncoder
+from uuid import UUID
+JSONEncoder_olddefault = JSONEncoder.default
+
+
+def JSONEncoder_newdefault(self, o):
+    if isinstance(o, UUID): return str(o)
+    return JSONEncoder_olddefault(self, o)
+
+
+JSONEncoder.default = JSONEncoder_newdefault
 # class customer(models.Model):
 #     # add additional fields in here
 #     # cust_id = models.UUIDField(primary_key=True, default=uuid.uuid4,
@@ -214,14 +227,14 @@ class Order(models.Model):
 #     def get_cost(self):
 #         return self.price * self.quantity
 #
-#     class Meta:
-#         ordering = ('placed_time',)
-#
-#     def __str__(self):
-#         return 'Order {}'.format(self.id)
-#
-#     def get_total_cost(self):
-#         return sum(item.get_cost() for item in self.items.all())
+    class Meta:
+        ordering = ('placed_time',)
+
+    def __str__(self):
+        return 'Order {}'.format(self.id)
+
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.items.all())
 
 
 class OrderItem(models.Model):
