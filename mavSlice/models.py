@@ -175,10 +175,10 @@ class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
-    address = models.CharField(max_length=250)
-    zip = models.CharField(max_length=20)
-    state = models.CharField(max_length=20)
-    city = models.CharField(max_length=100)
+    address = models.CharField(max_length=250, default='')
+    zip = models.CharField(max_length=20, default='')
+    state = models.CharField(max_length=20, default='')
+    city = models.CharField(max_length=100, default='')
     order_price = models.DecimalField(blank=False, default=0.00, max_digits=4, decimal_places=2)
     placed_time = models.DateTimeField(default=timezone.now)
     completed_time = models.DateTimeField(default=timezone.now)
@@ -213,25 +213,20 @@ class Order(models.Model):
 #
 #     def get_cost(self):
 #         return self.price * self.quantity
-
-
-    class Meta:
-        ordering = ('placed_time',)
-
-    def __str__(self):
-        return 'Order {}'.format(self.id)
-
-    def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+#
+#     class Meta:
+#         ordering = ('placed_time',)
+#
+#     def __str__(self):
+#         return 'Order {}'.format(self.id)
+#
+#     def get_total_cost(self):
+#         return sum(item.get_cost() for item in self.items.all())
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order,
-                              related_name='items',
-                              on_delete=models.CASCADE)
-    product = models.ForeignKey(Product,
-                                related_name='order_items',
-                                on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 
