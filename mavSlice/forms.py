@@ -58,7 +58,7 @@ class OrderCreateForm(forms.ModelForm):
 class CouponForm(forms.ModelForm):
     class Meta:
         model = Coupon
-        fields = ('coupon_id', 'totalDiscount',)
+        fields = ('totalDiscount',)
 
 
 class CartAddProductForm(forms.Form):

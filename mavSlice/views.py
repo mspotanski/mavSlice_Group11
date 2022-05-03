@@ -9,6 +9,8 @@ from .forms import *
 from .cart import *
 from io import BytesIO
 from .forms import *
+import braintree
+from django.conf import settings
 
 
 # Menu Functionality
@@ -161,7 +163,7 @@ def logout_view(request):
 @staff_member_required
 def admin_order_pdf(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    html = render_to_string('order/pdf.html',
+    html = render_to_string('mavSlice/Order/pdf.html',
                             {'order': order})
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename=\
@@ -196,12 +198,12 @@ def order_create(request):
             # set the order in the session
             request.session['order_id'] = order.order_id
             # redirect for payment
-            return redirect('payment/process_payment.html')
+            return redirect(reverse('mavSlice:process_payment'))
 
     else:
         form = OrderCreateForm()
     return render(request,
-                  'order/create.html',
+                  'mavSlice/Order/create.html',
                   {'cart': cart, 'form': form})
 
 
@@ -232,19 +234,18 @@ def payment_process(request):
             # store the unique transaction id
             order.braintree_id = result.transaction.id
             order.save()
-            return redirect('payment:done')
+            return redirect('mavSlice:complete_payment')
         else:
-            return redirect('payment:canceled')
+            return redirect('mavSlice:payment_canceled')
     else:
         # generate token
         client_token = braintree.ClientToken.generate()
-        return render(reverse(request, 'payment:process_payment',
-                              {'order': order, 'client_token': client_token}))
+        return render(request, 'mavSlice/payment/process_payment.html', {'order': order, 'client_token': client_token})
 
 
 def payment_completed(request):
-    return render(request, 'payment/payment_complete.html')
+    return render(request, 'mavSlice/payment/payment_complete.html')
 
 
 def payment_canceled(request):
-    return render(request, 'payment/payment_cancelled.html')
+    return render(request, 'mavSlice/payment/payment_cancelled.html')
