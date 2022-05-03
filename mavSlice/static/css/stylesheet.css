@@ -76,7 +76,7 @@ footer {
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     .container{
     padding: 2rem;}
     .sidenav {
@@ -106,30 +106,34 @@ footer {
     height: 230px;
 }*/
 
-
+.box {
+    width:130%;
+    background-color:lightpink;
+}
 .container{
-    width:100%;
+    width:150%;
     background-color: goldenrod;
     text-align: center;
 }
-.container1{
+.box .container1{
     float:left;
     width:49%;
     marign-right:2%;
     max-width: 400px;
 }
 
-.container2{
+.box .container2{
     float:right;
-    width:50%;
+    width:49%;
     max-width: 400px;
 }
 
 .container3{
     clear:both;
-    width:100%;
+    width:150%;
     background-color:lightpink;
     text-align: center;
+    margin-bottom: auto;
 }
 .container1 img{
     width:350px;
@@ -181,3 +185,4 @@ footer {
     text-align: center;
 
 }
+

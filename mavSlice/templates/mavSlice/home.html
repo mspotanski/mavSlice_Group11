@@ -10,33 +10,38 @@
     <link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
 </head>
 <body>
+    <div class="container">
+        {% if user.is_authenticated %}
 
-    {% if user.is_authenticated %}
-        <div class="container">
             <h2 class="top-menu">Welcome to mavSlice {{ user.username }},</h2>
 
-        </div>
-    {% else %}
-        <p>Welcome to mavSlice Guest.</p>
-    {% endif %}
+        {% else %}
+            <p>Welcome to mavSlice Guest.</p>
+        {% endif %}
+    </div>
 
-
-
-                <div class="container1">
+    <div class = "box">
+        <div class="container1">
                     <img src="{% static "images/pizza.jpeg" %}" alt="pizza">
                     <a href="{% url 'mavSlice:Menu' %}">
                         <button class="btn1">Order Now !!</button>
                     </a>
 
-                </div>
+        </div>
 
-                <div class="container2">
+        <div class="container2">
                     <img src="{% static "images/pizza1.jpeg" %}">
                     <a href="{% url 'mavSlice:Menu' %}">
                         <button class="btn2">Order Now !!</button>
                     </a>
 
-                </div>
+        </div>
+
+
+    </div>
+
+
+
 
             <br>
             <br>

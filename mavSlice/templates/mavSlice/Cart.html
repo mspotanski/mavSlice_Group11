@@ -4,9 +4,10 @@
 {% block title %}
   Your shopping cart
 {% endblock %}
-
+<link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
 {% block content %}
   <h1>Your Shopping Cart</h1>
+
   <table class="cart">
     <thead>
       <tr>
@@ -49,10 +50,51 @@
       </tr>
     </tbody>
   </table>
-  <p class="text-right">
-    <a href="{% url "mavSlice:Menu" %}" class="button light">Continue shopping</a>
-    <a href="{% url "mavSlice:order_create" %}" class="button">
-      Checkout
+
+    <style>
+    .button3{
+        position:absolute;
+        text-align: center;
+    top:150%;
+    right:35%;
+    tranform:translate(-50%, -50%);
+    background-color: palegoldenrod;
+    width:100px;
+    position:absolute;
+    height:50px;
+    border-radius:40px;
+    border:2px; solid:#A2D9CE;
+    transition: background-color 1s
+    }
+    .button3:hover{
+    background-color: #A2D9CE;
+}
+    .button4{
+        position:absolute;
+        text-align: center;
+    top:160%;
+    right:0%;
+    tranform:translate(-50%, -50%);
+    background-color: palegoldenrod;
+    width:100px;
+    position:absolute;
+    height:30px;
+    border-radius:40px;
+    border:2px; solid:#A2D9CE;
+    transition: background-color 1s;
+
+    }
+    .button4:hover{
+    background-color: #A2D9CE;
+}
+
+    </style>
+
+    <a href="{% url "mavSlice:Menu" %}"
+      <button class="button3">Continue shopping </button></a>
+    <a href="{% url "mavSlice:order_create" %}"
+      <button class="button4">Checkout</button>
+      
     </a>
-  </p>
+
 {% endblock %}
