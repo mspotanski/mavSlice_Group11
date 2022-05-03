@@ -133,12 +133,6 @@ def logout_view(request):
         logout(request)
     return redirect("mavSlice:home")
 
-# def calculate_cart_price(username):
-# price_all = 0
-# for obj in Product.objects.filter(add_by=username).filter(already_ordered=False):
-# price_all += obj.price
-# return price_all
-
 
 # Order Functionality
 # def order_create(request):
@@ -162,7 +156,7 @@ def logout_view(request):
 #     return render(request,
 #                   'mavSlice/checkout.html',
 #                   {'cart': cart, 'form': form})
-#
+
 
 @staff_member_required
 def admin_order_pdf(request, order_id):
@@ -173,8 +167,8 @@ def admin_order_pdf(request, order_id):
     response['Content-Disposition'] = 'filename=\
         "order_{}.pdf"'.format(order.id)
     weasyprint.HTML(string=html).write_pdf(response,
-        stylesheets=[weasyprint.CSS(
-            settings.STATIC_ROOT + 'css/pdf.css')])
+                                           stylesheets=[weasyprint.CSS(
+                                               settings.STATIC_ROOT + 'css/pdf.css')])
     return response
 
 
@@ -184,6 +178,7 @@ def admin_order_detail(request, order_id):
     return render(request,
                   'admin/admin_order_detail.html',
                   {'order': order})
+
 
 def order_create(request):
     cart = Cart(request)
@@ -199,9 +194,9 @@ def order_create(request):
             # clear the cart
             cart.clear()
             # set the order in the session
-            request.session['order_id'] = order.id
+            request.session['order_id'] = order.order_id
             # redirect for payment
-            return redirect(reverse('payment:process'))
+            return redirect('payment/process_payment.html')
 
     else:
         form = OrderCreateForm()
@@ -211,26 +206,14 @@ def order_create(request):
 
 
 @login_required
-def cart_delivery(request):
-    return render(request, 'mavSlice/cart_delivery.html',
-                  {'Delivery': Delivery})
-
-
-@login_required
 def checkout(request):
     return render(request, 'mavSlice/checkout.html',
                   {'Checkout': checkout})
 
 
-# Payment Processing
-@login_required
-def order_confirmation(request):
-    pass
-
-
 def payment_process(request):
     order_id = request.session.get('order_id')
-    order = get_object_or_404(Order, id=order_id)
+    order = get_object_or_404(Order, order_id=order_id)
 
     if request.method == 'POST':
         # retrieve nonce
@@ -255,10 +238,8 @@ def payment_process(request):
     else:
         # generate token
         client_token = braintree.ClientToken.generate()
-        return render(request,
-                      'payment/process_payment.html',
-                      {'order': order,
-                       'client_token': client_token})
+        return render(reverse(request, 'payment:process_payment',
+                              {'order': order, 'client_token': client_token}))
 
 
 def payment_completed(request):
