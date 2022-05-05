@@ -3,13 +3,13 @@
 {% extends 'mavSlice/base.html' %}
 {% block content %}
 {% load static %}
-
+<style> body { background-color: beige; } </style>
 <h1>MavSlice Whole Pizzas</h1>
-    <link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
-    <div class="row">
+
+    <div class="row" style="height:200px ; width:3000px;">
         <div class="col-md-4 d-flex align-items-stretch">
             {% for product in products %}
-                <div class="card">
+                <div class="card" style="width:1000rem ; height:10rem;">
                 <img src="{% if product.image %}{{ product.image.url }}{% else %}
                                   {% static "css/images/supreme.jpeg" %}{% endif %}" class="card-img-top">
                                         <div class="card-body">

@@ -9,6 +9,7 @@
 
 
 {% block content %}
+    <style> body { background-color: beige; } </style>
   <div class="product-detail">
     <img src="{% if product.image %}{{ product.image.url }}{% else %}{{'static/images/No_image_available.png'}}{% endif %}">
     <h1>{{ product.name }}</h1>
@@ -48,3 +49,4 @@
   </style>
   </div>
 {% endblock %}
+</html>

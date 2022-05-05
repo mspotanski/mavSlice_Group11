@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
+    <style> body { background-color: beige; }
+
+    </style>
   <h1>Checkout</h1>
 
   <div class="order-info">

@@ -15,20 +15,18 @@ class ll_ATS(unittest.TestCase):
         user = "kandel"
         pwd = "kandel"
 
-        time.sleep(10)
         driver = self.driver
         driver.maximize_window()
-        driver.get("http://127.0.0.1:800/admin")
-        time.sleep(10)
+        driver.get("http://127.0.0.1:800")
+
         elem = driver.find_element(By.XPATH, '//*[@id="id_username"]').click()
-        time.sleep(5)
         elem.send_keys(user)
-        elem = driver.find_element(By.XPATH, '//*[@id="id_password"]').click()
+        elem = driver.find_element(By.XPATH, '//*[@id="app-layout"]/div/div[2]/div/div/form/p[2]/label').click()
         elem.send_keys(pwd)
         time.sleep(8)
         elem.send_keys(Keys.RETURN)
         time.sleep(8)
-        driver.get("http://127.0.0.1:800/admin")
+        driver.get("http://127.0.0.1:800")
         time.sleep(8)
 
         try:
