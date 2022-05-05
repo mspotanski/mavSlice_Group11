@@ -6,7 +6,7 @@
 {% endblock %}
 <link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
 {% block content %}
-  <h1>Your Shopping Cart</h1>
+  <h1>Your Cart</h1>
 
   <table class="cart">
     <thead>
@@ -52,11 +52,58 @@
   </table>
 
     <style>
+    table{
+        width:150%;
+        border-spcaing:0;
+        border-collapse: collapse;
+    }
+    table th, table td{
+        text-align:left;
+    font-size:14px;
+    padding:10px;
+    margin:0;
+    }
+
+    tbody tr:nth-child(odd) {
+    background:#efefef;}
+
+    thead th, tbody tr.total{
+        background:lightblue;
+        color:#fff;
+        font-weight:bold;
+        
+    }
+
+    table.cart{
+        margin-bottom:40px;
+    }
+    table.cart img{
+        width:180px;
+    }
+
+    tbody td.num{
+        text-align:right;
+    }
+    td input[type="submit"] {
+    font-size:12px;
+    padding:4px 10px;}
+
+    h1{
+        padding:10px 100px;
+        font-size:30px;
+        overflow:auto;
+        font-family: 'Ubuntu', sans-serif;
+        float:right;
+        color:#333;
+        
+        
+    }
+    
     .button3{
         position:absolute;
         text-align: center;
-    top:150%;
-    right:35%;
+    top:95%;
+    left:10%;
     tranform:translate(-50%, -50%);
     background-color: palegoldenrod;
     width:100px;
@@ -66,14 +113,15 @@
     border:2px; solid:#A2D9CE;
     transition: background-color 1s
     }
+
     .button3:hover{
     background-color: #A2D9CE;
 }
     .button4{
         position:absolute;
         text-align: center;
-    top:160%;
-    right:0%;
+    top:95%;
+    left:120%;
     tranform:translate(-50%, -50%);
     background-color: palegoldenrod;
     width:100px;

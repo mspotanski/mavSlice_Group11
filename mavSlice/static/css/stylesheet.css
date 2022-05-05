@@ -186,3 +186,42 @@ footer {
 
 }
 
+.order-info{
+    float:right;
+    width:300px;
+    background:lightgray;
+    padding:10px 20px;
+    color:black;
+    border-bottom: 5px;
+    solid:black;
+}
+
+.order-info h3{
+    color:black;
+}
+.order-info ul li{
+    margin:0;
+    padding:0;
+    font-size:15px;
+}
+
+.order-info p{
+    font-weight:bold;
+    float:right;
+
+}
+.order-info span{
+    float:right;
+}
+from div.field{
+    font-size:12px;
+    color:#666;
+    width:300px;
+    height:25px;
+    margin-bottom:15px;
+    padding: 6px 12px;
+    border:0;
+    background:white;
+    color:#666;
+    border-radius:5px;
+}

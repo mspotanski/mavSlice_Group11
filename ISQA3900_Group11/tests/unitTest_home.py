@@ -10,7 +10,7 @@ class ll_ATS(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Safari()
         warnings.simplefilter('ignore', ResourceWarning)
-
+        time.sleep(20)
         def test_ll(self):
             driver = self.driver
             driver.maximize_window()
