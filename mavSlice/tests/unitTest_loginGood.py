@@ -15,24 +15,24 @@ class ll_ATS(unittest.TestCase):
         user = "kandel"
         pwd = "kandel"
 
-        time.sleep(10)
         driver = self.driver
         driver.maximize_window()
-        driver.get("http://127.0.0.1:800/admin")
-        time.sleep(10)
-        elem = driver.find_element(By.XPATH, '//*[@id="id_username"]').click()
-        time.sleep(5)
+        driver.get("http://127.0.0.1:800")
+        elem = driver.fint_element(By.XPATH,'//*[@id="myNavbar"]/ul[3]/li/a').click()
+        time.sleep(6)
+
+        elem = driver.find_element(By.NAME, "username")
         elem.send_keys(user)
-        elem = driver.find_element(By.XPATH, '//*[@id="id_password"]').click()
+        elem = driver.find_element(By.NAME, "password")
         elem.send_keys(pwd)
         time.sleep(8)
         elem.send_keys(Keys.RETURN)
         time.sleep(8)
-        driver.get("http://127.0.0.1:800/admin")
+        elem = driver.find_element(By.XPATH, '//*[@id="app-layout"]/div/div[2]/div/div[3]/div[1]/a/button')
         time.sleep(8)
 
         try:
-            elem = driver.find_element(By.LINK_TEXT, "Logout")
+            elem = driver.find_element(By.XPATH,'//*[@id="app-layout"]/div/div[2]/div/div[3]/div[1]/a/button' )
             print("Test Passed -Valid user is logged in sucessfully")
             assert True
         except NoSuchElementException:

@@ -105,7 +105,7 @@ footer {
     width:100%;
     height: 230px;
 }*/
-
+/*divs home page*/
 .box {
     width:130%;
     background-color:lightpink;
@@ -135,16 +135,75 @@ footer {
     text-align: center;
     margin-bottom: auto;
 }
+
+.container4{
+    clear:both;
+    width:150%;
+    text-align: center;
+    margin-bottom: auto;}
+
+.small {
+    position: absolute;
+    width:400px;
+    padding:50px 20px;
+    background-color:rgba(255,255,255,0.7);
+    top:600px;
+    left:16px;
+    font-size: 25px;
+}
+.small .btn3{
+    position:absolute;
+    tranform:translate(-50%, -50%);
+    background-color:darkred;
+    border:2px; solid:#A2D9CE;
+    transition: background-color 1s;
+    right:35%;
+
+
+}
+.small .btn3:hover{
+    background-color: yellow;
+}
+/*.container4 .small .p
+    {
+    font-size:12px;
+    color:#666;
+    width:300px;
+    height:30%;
+    margin-bottom:15px;
+    padding: 6px 12px;
+    border:0;
+    background:white;
+    color:#666;
+    border-radius:5px;
+}
+*/
+
+
+
+
+
+
+/*images*/
+.container2 img{
+    width:350px;
+    height:350px;
+}
+
 .container1 img{
     width:350px;
     height:350px;
 }
 
+.container4 img{
+    width:100%;
+    max-height:475px;
+}
 
-
+/*container btn*/
 .container1 .btn1{
     position:absolute;
-    top:70%;
+    top:35%;
     right:85%;
     tranform:translate(-50%, -50%);
     background-color: palegoldenrod;
@@ -159,14 +218,11 @@ footer {
     background-color: #A2D9CE;
 }
 
-.container2 img{
-    width:350px;
-    height:350px;
-}
+
 .container2 .btn2{
     position:absolute;
-    top:70%;
-    left:85%;
+    top:35%;
+    left:80%;
 
     tranform:translate(-50%, -50%);
     background-color: palegoldenrod;
@@ -180,12 +236,48 @@ footer {
 .container2 .btn2:hover{
     background-color: #A2D9CE;
 }
+.container5 .btn5{
+    position:absolute;
+    top:3%;
+    left:70%;
+
+    tranform:translate(-50%, -50%);
+    background-color: darkred;
+    width:100px;
+    position:absolute;
+    height:30px;
+    border-radius:20px;
+    border:2px; solid:#A2D9CE;
+    transition: background-color 1s;
+}
+.container5 .btn5:hover{
+    background-color: yellow;
+}
+.container5 .btn6{
+    position:absolute;
+    top:3%;
+    left:40%;
+
+    tranform:translate(-50%, -50%);
+    background-color: darkred;
+    width:100px;
+    position:absolute;
+    height:30px;
+    border-radius:20px;
+    border:2px; solid:#A2D9CE;
+    transition: background-color 1s;
+}
+
+.container5 .btn6:hover{
+    background-color: yellow;
+}
+
 
 .container3 .h3{
     text-align: center;
 
 }
-
+/*check out*/
 .order-info{
     float:right;
     width:300px;

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static "css/stylesheet.css" %}">
 </head>
 <body>
+
     <div class="container">
         {% if user.is_authenticated %}
 
@@ -19,6 +20,18 @@
             <p>Welcome to mavSlice Guest.</p>
         {% endif %}
     </div>
+            <br>
+            <br>
+
+     <div class = "container5">
+         <a href="{% url 'mavSlice:Menu' %}">
+                    <button class="btn5">Order Slice</button>
+     </a>
+
+      <a href="{% url 'mavSlice:Menu' %}">
+                    <button class="btn6">Order Whole</button>
+      </a>
+     </div>
 
     <div class = "box">
         <div class="container1">
@@ -28,6 +41,7 @@
                     </a>
 
         </div>
+
 
         <div class="container2">
                     <img src="{% static "images/pizza1.jpeg" %}">
@@ -49,6 +63,26 @@
                 <h3>About US</h3>
                 <p>mavSlice is a local pizza restaurant available on the campus. We love being the part of the campus and appreciate all our loyal customers. We use fresh ingredients to make our pizzas.</p>
             </div>
+
+            <div class=" container4">
+
+                <img src="{% static "images/img4.jpg" %}">
+
+                <div class ="small">
+                    <p>Get delicious fresh pizaa in a reasonable prices</p>
+
+                    <p>
+
+                        <a href="{% url 'mavSlice:Menu' %}">
+                    <button class="btn3">Order Now!!</button>
+                        </a>
+
+                    </p>
+            </div>
+
+            </div>
+
+
 
 
 
