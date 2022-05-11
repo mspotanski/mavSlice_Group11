@@ -140,7 +140,7 @@ class Product(models.Model):
     coupon = models.ManyToManyField('Coupon', blank=True)
     sauce = models.CharField(max_length=16, choices=PRODUCT_SAUCES, blank=False, default='Classic Marinara')
     price = models.DecimalField(blank=False, default=PRODUCT_TYPES, max_digits=6, decimal_places=2)
-    image = models.ImageField(upload_to='mavSlice/static/images', blank=True)
+    image = models.ImageField(upload_to='images/', blank=True)
     product_slug = models.SlugField(max_length=100, db_index=True)
 
     class Meta:

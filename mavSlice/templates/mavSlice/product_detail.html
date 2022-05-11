@@ -11,7 +11,7 @@
 {% block content %}
     <style> body { background-color: beige; } </style>
   <div class="product-detail">
-    <img src="{% if product.image %}{{ product.image.url }}{% else %}{{'static/images/No_image_available.png'}}{% endif %}">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/No_image_available.png' %}{% endif %}">
     <h1>{{ product.name }}</h1>
     <h2><a href="{{ product.get_absolute_url }}">}</a></h2>
     <p class="price">${{ product.get_price }}</p>

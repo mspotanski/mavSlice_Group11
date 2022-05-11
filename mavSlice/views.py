@@ -15,9 +15,13 @@ from django.conf import settings
 
 # Menu Functionality
 def Menu(request):
-    products = Product.objects.all()
-    print(products.values())
+    products = Product.objects.filter(type__exact='Whole Pie')
     return render(request, 'mavSlice/Menu.html', {'products': products})
+
+
+def slice_Menu(request):
+    products = Product.objects.filter(type__exact='Slice')
+    return render(request, 'mavSlice/slice_Menu.html', {'products': products})
 
 
 def get_products():

@@ -6,9 +6,10 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 import warnings
 
+
 class ll_ATS(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Safari()
+        self.driver = webdriver.Chrome()
         warnings.simplefilter('ignore', ResourceWarning)
 
     def test_11(self):
@@ -18,7 +19,7 @@ class ll_ATS(unittest.TestCase):
         driver = self.driver
         driver.maximize_window()
         driver.get("http://127.0.0.1:800")
-        elem = driver.find_element(By.XPATH,'//*[@id="myNavbar"]/ul[3]/li/a').click()
+        elem = driver.find_element(By.XPATH, '//*[@id="myNavbar"]/ul[3]/li/a').click()
         time.sleep(6)
 
         elem = driver.find_element(By.NAME, "username")
