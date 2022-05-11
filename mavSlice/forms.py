@@ -10,7 +10,9 @@ PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('name', 'description', 'price')
+        fields = ('name', 'description', 'price','image')
+
+
 
 
 # class Registration(UserCreationForm):
@@ -73,11 +75,12 @@ class CartAddProductForm(forms.Form):
 
 
 # Not finished, payment info?,
-class signupForm(UserCreationForm):
+#class signupForm(UserCreationForm):
     #delivery_info = forms.ModelForm()
     #payment_info = forms.ModelForm()
     #delivery_info = forms.ModelForm()
 
+class User(UserCreationForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'password1',)
