@@ -107,9 +107,23 @@ def product_list(request):
 #     else:
 #         return redirect("mavSlice:home")
 
+# def signup(request):
+#     return render(request, 'registration/signup.html',
+#                   {'signup': signup})
+
 def signup(request):
-    return render(request, 'registration/signup.html',
-                  {'signup': signup})
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('mavSlice:home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'mavSlice/signup.html', {'form': form})
 
 def login_view(request):
     if not request.user.is_authenticated:
