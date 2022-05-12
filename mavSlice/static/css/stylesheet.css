@@ -112,8 +112,12 @@ footer {
 }
 .container{
     width:150%;
-    background-color: goldenrod;
+    background-color:darkgoldenrod;
     text-align: center;
+}
+.container .h2{
+    font-size: 14px;
+
 }
 .box .container1{
     float:left;
@@ -238,7 +242,7 @@ footer {
 }
 .container5 .btn5{
     position:absolute;
-    top:3%;
+    top:5%;
     left:70%;
 
     tranform:translate(-50%, -50%);
@@ -255,7 +259,7 @@ footer {
 }
 .container5 .btn6{
     position:absolute;
-    top:3%;
+    top:5%;
     left:40%;
 
     tranform:translate(-50%, -50%);
@@ -281,7 +285,7 @@ footer {
 .order-info{
     float:right;
     width:300px;
-    background:lightgray;
+    background:darkred;
     padding:10px 20px;
     color:black;
     border-bottom: 5px;
