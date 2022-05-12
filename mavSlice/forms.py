@@ -10,14 +10,11 @@ PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('name', 'description', 'price','image')
-
-
+        fields = ('name', 'description', 'price', 'image')
 
 
 # class Registration(UserCreationForm):
 #     email = forms.EmailField(required=True)
-
 
 
 # class UserForm(forms.ModelForm):
@@ -32,7 +29,7 @@ class ProductForm(forms.ModelForm):
 #         fields = ('cust_fname', 'cust_lname', 'cust_password', 'delivery_info','payment_info')
 
 
-#def save(self, commit=True):
+# def save(self, commit=True):
 #     customer = super(Registration, self).save(commit=False)
 #     customer.fname = self.cleaned_data['fname']
 #     customer.lname = self.cleaned_data['lname']
@@ -53,7 +50,7 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['first_name', 'last_name', 'email', 'address', 'state',
-                  'city', 'zip', 'braintree_id']
+                  'city', 'zip',]
 
 
 # NOT FINISHED
@@ -75,10 +72,10 @@ class CartAddProductForm(forms.Form):
 
 
 # Not finished, payment info?,
-#class signupForm(UserCreationForm):
-    #delivery_info = forms.ModelForm()
-    #payment_info = forms.ModelForm()
-    #delivery_info = forms.ModelForm()
+# class signupForm(UserCreationForm):
+    # delivery_info = forms.ModelForm()
+    # payment_info = forms.ModelForm()
+    # delivery_info = forms.ModelForm()
 
 class User(UserCreationForm):
     class Meta:

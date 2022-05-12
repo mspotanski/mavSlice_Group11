@@ -4,13 +4,18 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 from .models import *
 from .forms import *
 from .cart import *
-from io import BytesIO
 from .forms import *
 import braintree
+from django.core.mail import send_mail
 from django.conf import settings
+
+
+# import weasyprint
 
 
 # Menu Functionality
@@ -115,6 +120,7 @@ def product_list(request):
 #     return render(request, 'registration/signup.html',
 #                   {'signup': signup})
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -128,6 +134,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'mavSlice/signup.html', {'form': form})
+
 
 def login_view(request):
     if not request.user.is_authenticated:
@@ -210,14 +217,23 @@ def order_create(request):
         if form.is_valid():
             order = form.save()
             for item in cart:
-                OrderItem.objects.create(order=order,
-                                         product=item['product'],
-                                         price=item['price'],
+                OrderItem.objects.create(order=order, product=item['product'], price=item['price'],
                                          quantity=item['quantity'])
             # clear the cart
             cart.clear()
             # set the order in the session
             request.session['order_id'] = order.order_id
+
+            # Send confirmation email
+            subject = 'MavSlice Order Number {} Has Been Placed'.format(order.order_id)
+            message = 'Thank you {} for placing an order with MavSlice today.\n' \
+                      'In hope to see you again, here is all of our current Coupons:\n{}\n' \
+                      'Hope to see you again!'.format(order.first_name, Coupon.objects.all())
+            try:
+                send_mail(subject, message, 'mavSliceGroup11@gmail.com', [order.email])
+                print('Email successfully sent')
+            except:
+                print('Error: Email not sent')
             # redirect for payment
             return redirect(reverse('mavSlice:process_payment'))
 

@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from celery import *
 from models import *
 
+
 @task
 def order_created(input_order_id):
     """
@@ -9,10 +10,10 @@ def order_created(input_order_id):
     successfully created.
     """
     order = Order.objects.get(order_id=input_order_id)
-    subject = 'Order nr. {}'.format(order.id)
+    subject = 'Order nr. {}'.format(order.order_id)
     message = 'Dear {},\n\nYou have successfully placed an order.\
                   Your order id is {}.'.format(order.first_name, order.order_id)
-    mail_sent = send_mail(subject, message, 'admin@myshop.com', [order.email])
+    mail_sent = send_mail(subject, message, 'mavSliceGroup11@gmail.com', [order.email])
     return mail_sent
 
 

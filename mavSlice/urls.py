@@ -18,8 +18,9 @@ from . import views
 from django.urls import path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
-#from django.conf.urls import url
-#from mysite.core import views as core_views
+
+# from django.conf.urls import url
+# from mysite.core import views as core_views
 
 app_name = 'mavSlice'
 
@@ -36,9 +37,9 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('Cart/order_confirmation/', views.payment_completed, name='order_confirmation'),
     path('checkout/', views.checkout, name='checkout'),
-    #path('user/<int:pk>/summary/', views.user_info, name='user_info'),
-    #path('user/<int:pk>/summary/delivery/', views.user_info_delivery, name='user_info_delivery'),
-    #path('user/<int:pk>/summary/payment/', views.user_info_payment, name='user_info_payment'),
+    # path('user/<int:pk>/summary/', views.user_info, name='user_info'),
+    # path('user/<int:pk>/summary/delivery/', views.user_info_delivery, name='user_info_delivery'),
+    # path('user/<int:pk>/summary/payment/', views.user_info_payment, name='user_info_payment'),
     path('place_order/', views.order_create, name='order_create'),
     path('admin/order/<str:order_id>/', views.admin_order_detail, name='admin_order_detail'),
     path('Menu/<str:product_id>/<slug:slug>/', views.product_detail, name='product_detail'),
@@ -49,9 +50,7 @@ urlpatterns = [
     path('admin/order/<str:order_id>/', views.admin_order_detail, name='admin_order_detail'),
     path('admin/order/<str:order_id>/pdf/', views.admin_order_pdf, name='admin_order_pdf'),
 
-
 ]
 
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

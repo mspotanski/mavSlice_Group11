@@ -132,6 +132,11 @@ MEDIA_URL = '/media/'
     #os.path.join(BASE_DIR, 'static')
 #]
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mavSliceGroup11'
+EMAIL_HOST_PASSWORD = '@Stormtrooper69'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 CART_SESSION_ID = 'cart'
 

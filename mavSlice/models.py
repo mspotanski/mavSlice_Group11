@@ -1,11 +1,8 @@
 import uuid
-from django.db import models
 from django.utils import timezone
-import decimal
 import braintree
 from django.contrib.auth.models import User, AbstractUser
 from django.urls import reverse
-# accounts/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
@@ -197,6 +194,13 @@ class Order(models.Model):
     completed_time = models.DateTimeField(default=timezone.now)
     braintree_id = models.CharField(max_length=150, blank=True)
     is_completed = models.BooleanField(default=False)
+
+    def set_order_price(self):
+        temp = 0
+        items = OrderItem.objects.filter(order__order_id__exact=self.order_id)
+        for item in items:
+            temp += item.get_cost()
+        self.order_price = temp
 #
 #     class Meta:
 #         ordering = ('-placed_time',)
@@ -231,7 +235,9 @@ class Order(models.Model):
         ordering = ('placed_time',)
 
     def __str__(self):
-        return 'Order {}'.format(self.id)
+        return 'Order {}:\nPlaced Time: {}\nOrder Items:{}\n'.format(self.order_id, self.placed_time,
+                                                                     OrderItem.objects.filter(
+                                                                         order_id__exact=self.order_id))
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
@@ -244,7 +250,7 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return '{}'.format(self.id)
+        return '{}'.format(self.order.order_id)
 
     def get_cost(self):
         return self.price * self.quantity
